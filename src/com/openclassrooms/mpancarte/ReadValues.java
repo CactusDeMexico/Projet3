@@ -7,21 +7,32 @@ public class ReadValues {
     protected Properties prop;
     protected InputStream input = ReadValues.class.getClassLoader().getResourceAsStream("config.properties");
 
-    public ReadValues() throws Exception{
+    public ReadValues() throws Exception {
 
         prop = new Properties();
 
         prop.load(input);
     }
+
     public String getModeJoueur() {
         return prop.getProperty("ModeJoueur");
     }
-    public String getNbCase() {
-        return prop.getProperty("NbCase");
+
+    public int getNbCase() {
+        return  Integer.valueOf(prop.getProperty("NbCase"));
     }
-    public String getNbEssai() { return prop.getProperty("NbEssai");}
-    public String getNbCouleur(){ return  prop.getProperty("NbCouleurSelec");}
-    public String getNbCaseCouleur(){ return  prop.getProperty("NbCaseCouleur");}
+
+    public int getNbEssai() {
+        return  Integer.valueOf(prop.getProperty("NbEssai"));
+    }
+
+    public int getNbCouleur() {
+        return  Integer.valueOf(prop.getProperty("NbCouleurSelec"));
+    }
+
+    public int getNbCaseCouleur() {
+        return  Integer.valueOf(prop.getProperty("NbCaseCouleur"));
+    }
     // Properties file path.
     //String filePath = "src/resources/config.properties";
 

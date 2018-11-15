@@ -1,13 +1,6 @@
 package com.openclassrooms.mpancarte;
 
-
-import com.openclassrooms.mpancarte.Mastermind.MasterMind;
-import com.openclassrooms.mpancarte.SecretNumber.SecretNumber;
-
-import java.util.ArrayList;
-import java.util.Random;
-
-public class Choix {
+public class Menu {
     public int NbCase;
     public int NbEssai;
     public String ModeJoueur = "";
@@ -17,7 +10,7 @@ public class Choix {
     private String JeuxSelec = "";
 
 
-    public void Launcher(String Mode) {
+    public void Launcher(String Mode) throws Exception{
         MasterMind JeuM = new MasterMind();
         SecretNumber JeuS = new SecretNumber();
         if (this.JeuxSelec.equalsIgnoreCase("MasterMind")) {
@@ -28,19 +21,19 @@ public class Choix {
         }
     }
 
-    public void ModeJeux() {
+    public void ModeJeux()throws Exception {
         int selection = 0;
         do {
             System.out.println("__________Selection mode de jeux __________");
             System.out.println("1- Mode challenger \n  où vous devez trouver la combinaison secrète de l'ordinateur ___________");
             System.out.println("2-Mode défenseur \n  où c'est à l'ordinateur de trouver votre combinaison secrète ______________");
             System.out.println("3-Mode duel \n l'ordinateur et vous jouez tour à tour, le premier à trouver la combinaison secrète de l'autre a gagné_______________");
-            selection = Console.saisirInt();
+            selection = ConsoleUtils.saisirInt();
         } while (selection < 0 || selection > 3);
         switch (selection) {
             case 1:
                 this.ModeJeux = "challenger";
-                System.out.println(this.JeuxSelec.equalsIgnoreCase("MasterMind"));
+
                 Launcher(this.ModeJeux);
                 break;
             case 2:
@@ -49,26 +42,30 @@ public class Choix {
                 break;
             case 3:
                 this.ModeJeux = "duel";
-                System.out.println(this.JeuxSelec.equalsIgnoreCase("MasterMind"));
+
                 Launcher(this.ModeJeux);
                 break;
         }
     }
-    //definition variable
-    public void Menu() throws Exception {
+    public int Init()throws Exception{
         ReadValues Data = new ReadValues();
         this.ModeJoueur = Data.getModeJoueur();
         this.NbCaseCouleur = Integer.valueOf(Data.getNbCaseCouleur());
         this.NbCase = Integer.valueOf(Data.getNbCase());
         this.NbEssai = Integer.valueOf(Data.getNbEssai());
         this.NbCouleurSelec = Integer.valueOf(Data.getNbCouleur());
+        return this.NbCouleurSelec;
+    }
+    //definition variable
+    public void Menu() throws Exception {
+        Init();
         int choix = 3;
         while (choix != 0) {
             System.out.println("\033[31m___________Accueil ___________");
             System.out.println("\033[35m1_________Nombre secret_______");
             System.out.println("\033[36m2________Mastermind___________");
             System.out.println("\033[33m0________Quitter______________");
-            choix = Console.saisirInt();
+            choix = ConsoleUtils.saisirInt();
             if (choix == 1) {
                 this.JeuxSelec = "SecretNumber";
             }
@@ -82,35 +79,4 @@ public class Choix {
         }
 
     }
-
-
-    public String ChoixJoueurSecretNumber() {
-        String NbSecret = "";
-
-
-        //définition du nombre secret
-        boolean fait = false;
-        while (fait == false) {
-            System.out.println("Entrer  Le nombre secret");
-            NbSecret += Console.saisirInt();
-            System.out.println(NbSecret.length());
-            this.NbCase = NbSecret.length();
-            fait = true;
-        }
-        System.out.println("Developpeur".equalsIgnoreCase(this.ModeJoueur) ? "Le Nombre secret est:" + NbSecret : "Mode Joueur");
-        //verification du code
-        return NbSecret;
-
-    }
-/*
-    public String AffichageChoixJ() {
-
-    }
-
-    public String ChoixCombinaison(int g) {
-
-
-    }
-*/
 }
-
