@@ -1,26 +1,19 @@
 package com.openclassrooms.mpancarte;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Random;
 
 import static java.lang.Integer.valueOf;
 
-public abstract class Game {
-    public int NbCase;
-    public int NbEssai;
-    public String ModeJoueur = "";
-    public String ModeJeux = "";
-    public int NbCouleurSelec;
-    public int NbCaseCouleur;
-    public ArrayList OldAnswer = new ArrayList();
-    public int max[], min[];
+abstract class Game {
+    private ArrayList<String> AlreadyDone = new ArrayList<>();
+    private ArrayList<String> OldAnswer = new ArrayList<>();
 
 
     // IA______________
-    public String Doublon(String Selection, String test) {
+    String antiDuplicateString(String Selection, String test) {
         Random Random = new Random();
         if (Selection.contains(test)) {
             while (Selection.contains(test)) {
@@ -31,17 +24,48 @@ public abstract class Game {
         return test;
     }
 
-    public String selectionIA(String ModeJeux, int NbCase, String PlayerMode) {
+    private String antiDuplicateChar(String Selection, boolean Player) {
+        int count = 3;
+        Random random = new Random();
+        while (count > 1) {
+            count = 0;
+            for (int i = 0; i < Selection.length(); i++) {
+                int index = 0;
+                if (count == 1) {
+                    count = 0;
+                }
+                while (index < Selection.length()) {
+                    if (Selection.charAt(i) == Selection.charAt(index)) {
+                        count++;
+                    }
+                    index++;
+                }
+            }
+            if (count > 1) {
+                Selection = "";
+                if (!Player) {
+                    Selection += random.nextInt();
+                } else {
+
+                    System.out.println("Veuillez ne pas entrer les memes chiffres");
+                    Selection += ConsoleUtils.saisirInt();
+                }
+            }
+        }
+        return Selection;
+    }
+
+    String selectionIA(String GameMode, int NbCase, String PlayerMode) {
 
         String Selection = "";
         Random Random = new Random();
-        String nb = "";
+        String nb;
 
         for (int i = 0; i < NbCase; i++) {
             nb = "";
             nb += Random.nextInt(10);
-            if (ModeJeux.equalsIgnoreCase("MasterMind")) {
-                nb = Doublon(Selection, nb);
+            if (GameMode.equalsIgnoreCase("MasterMind")) {
+                nb = antiDuplicateString(Selection, nb);
             }
             Selection += nb;
         }
@@ -51,154 +75,143 @@ public abstract class Game {
         return Selection;
     }
 
-    public String selectionPlayer(String ModeJeux, String PlayerMode) {
+    String selectionPlayer(String ModeJeux, String PlayerMode) {
         String Selection = "";
-
-        boolean fait = false;
-        while (fait == false) {
+        boolean Done = false;
+        while (!Done) {
             String nb = "";
-            System.out.println("Entrer  La combinaison secret");
+            System.out.println("Entrer  La combinaison ");
             nb += ConsoleUtils.saisirInt();
             if (ModeJeux.equalsIgnoreCase("MasterMind")) {
-                nb = Doublon(Selection, nb);
+                nb = antiDuplicateChar(nb, true);
             }
-            Selection += nb;
-            System.out.println(Selection.length());
-            fait = true;
+            Done = true;
+            Selection = nb;
         }
-        System.out.println("Developpeur".equalsIgnoreCase(ModeJeux) ? "Le Nombre secret est:" + Selection : "Mode Joueur");
-       // System.out.println("Developpeur".equalsIgnoreCase(PlayerMode) ? "La combinaison secrete est:" + Selection : "Mode Joueur");
+
+        System.out.println("Developpeur".equalsIgnoreCase(PlayerMode) ? "La selection  est:" + Selection : "Mode Joueur");
+        // System.out.println("Developpeur".equalsIgnoreCase(PlayerMode) ? "La combinaison secrete est:" + Selection : "Mode Joueur");
         return Selection;
     }
 
-    public static int getMaxValue(int[] array) {
-        int maxValue = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > maxValue) {
-                maxValue = array[i];
-            }
-        }
-        return maxValue;
-    }
 
-    // getting the miniumum value
-    public static int getMinValue(int[] array) {
-        int minValue = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] < minValue) {
-                minValue = array[i];
-            }
-        }
-        return minValue;
-    }
-
-    public String secretNumberAnswer(String indication, int i, String test, int PerformedTest) throws Exception {
-        //this.min et max
+    private String secretNumberAnswer(String indication, int i, String test, int PerformedTest) throws Exception {
         ReadValues Data = new ReadValues();
-        String reponse = "";
+        String Selection = "";
         Random Random = new Random();
-        String PreviousData = "";
-        this.max = new int[Data.getNbEssai()];
-        this.min = new int[Data.getNbEssai()];
-        int[] min = new int[this.OldAnswer.size()];
+        StringBuilder PreviousData = new StringBuilder();
         int RemainingTest = Data.getNbEssai() - PerformedTest;
         if (RemainingTest == Data.getNbEssai()) {
-            reponse += valueOf(Random.nextInt(10));
+            Selection += valueOf(Random.nextInt(10));
         } else {
-
             for (int z = 0; z < this.OldAnswer.size(); z++) {
-                String cc = "";
-                cc += this.OldAnswer.get(z);
-                min[z] = Character.getNumericValue(cc.charAt(i));
+                String Char = "";
+                Char += this.OldAnswer.get(z);
                 if (z < Data.getNbCase()) {
-                    PreviousData = (String) (PreviousData + cc.charAt(i));
+                    PreviousData.append(Char.charAt(i));
                 }
             }
-            Arrays.sort(min);
             if (Character.toString(indication.charAt(i)).equals("=")) {
-                reponse += Character.getNumericValue(valueOf(test.charAt(i)));
+                Selection += Character.getNumericValue(valueOf(test.charAt(i)));
             }
             if (Character.toString(indication.charAt(i)).equals("-")) {
 
-                reponse += Random.nextInt(Character.getNumericValue(valueOf(test.charAt(i))) - 0);
+                Selection += Random.nextInt(Character.getNumericValue(valueOf(test.charAt(i))));
 
-                reponse = Doublon(PreviousData, reponse);
+                Selection = antiDuplicateString(PreviousData.toString(), Selection);
             }
             if (Character.toString(indication.charAt(i)).equals("+")) {
 
-                reponse += Random.nextInt(10 - Character.getNumericValue(valueOf(test.charAt(i))));
-                reponse = Doublon(PreviousData, reponse);
+                Selection += Random.nextInt(10 - Character.getNumericValue(valueOf(test.charAt(i))));
+                Selection = antiDuplicateString(PreviousData.toString(), Selection);
             }
-/*
-            if (Character.toString(indication.charAt(i)).equals("=")) {
-                reponse += Character.getNumericValue(valueOf(test.charAt(i)));
-            }
-            if (Character.toString(indication.charAt(i)).equals("-")) {
-                this.max[i] = Character.getNumericValue(PreviousData.charAt(i));
-                reponse += Random.nextInt(this.max[i] - 0);
-
-                reponse=Doublon(PreviousData,reponse);
-            }
-            if (Character.toString(indication.charAt(i)).equals("+")) {
-                this.min[i] = Character.getNumericValue(PreviousData.charAt(i));
-                reponse += Random.nextInt(10 - this.min[i]);
-                reponse=Doublon(PreviousData,reponse);
-            }         System.out.println("LE Min "+this.max[i]+"LE max "+this.min[i]);
-            System.out.println("ancienne valeur donné"+PreviousData);*/
         }
 
-        return reponse;
+        return Selection;
     }
 
-    public String masterMindAnswer() {
-        String reponse = "";
-        Random Random = new Random();
-        return reponse;
-    }
-
-    public String answerIA(String ModeJeux, int NbCase, int PerformedTest, String Indication, String LastAnswer) throws Exception {
-        //this.ModeJoueur = "Developpeur";
-        ArrayList NombreSecret = new ArrayList();
-        String AntiDuplicate = "";
-        Random Random = new Random();
-        String reponse = "";
+    private String masterMindAnswer(String SelectedColor, int GoodColor, int ColorExist, int PerformedTest, int NbCase) throws Exception {
         ReadValues Data = new ReadValues();
-        SecretNumber SC = new SecretNumber();
-        for (int i = 0; i < NbCase; i++) {   //1er essai de l'ordinateur
-            if (ModeJeux.equalsIgnoreCase("MasterMind")) {
+        String Answer = "";
+        String nb;
+        int phy;
+        Random Random = new Random();
+        int RemainingTest = Data.getNbEssai() - PerformedTest;
+        if (RemainingTest == Data.getNbEssai()) { //1er Test
 
-            } else {
-                reponse += secretNumberAnswer(Indication, i, LastAnswer, PerformedTest);
+            nb = "";
+            nb += SelectedColor.charAt(Random.nextInt(SelectedColor.length()));
+            nb = antiDuplicateString(Answer, nb);
+
+        } else {
+            if (ColorExist == NbCase || (GoodColor + ColorExist) == NbCase) {// recherche precise
+                phy = this.AlreadyDone.size() - 1;
+                SelectedColor += this.AlreadyDone.get(phy);
             }
-
+            nb = "";
+            nb += SelectedColor.charAt(Random.nextInt(SelectedColor.length()));
+            nb = antiDuplicateString(Answer, nb);
         }
-        this.OldAnswer.add(reponse);
-        return reponse;
+        Answer += nb;
+        return Answer;
     }
 
-    public String answerPlayer(String ModeJeux, int NbCase) throws Exception {
-        String reponse = "";
-        String x = "";
+    private int alreadyDone(int i, String Answer) {
+        String PreviousData[] = new String[this.AlreadyDone.size()];
+        for (int z = 0; z < this.AlreadyDone.size(); z++) {
+            PreviousData[z] += this.AlreadyDone.get(z);
+            if (PreviousData[z].equals(Answer)) {
+                i = -1;
+            }
+        }
+        return i;
+    }
 
+    String answerIA(String GameMode, int NbCase, int PerformedTest, String Indication, String LastAnswer) throws Exception {
+        String Answer = "";
         for (int i = 0; i < NbCase; i++) {   //1er essai de l'ordinateur
-            if (ModeJeux.equalsIgnoreCase("MasterMind")) {
+            if (GameMode.equalsIgnoreCase("MasterMind")) {
 
+                String[] format = LastAnswer.split(",");
+                int GoodColor = Integer.parseInt(String.valueOf(format[0]));
+                int ColorExist = Integer.parseInt(String.valueOf(format[1]));
+                Answer += masterMindAnswer(Indication, GoodColor, ColorExist, PerformedTest, NbCase);
+                Answer = antiDuplicateChar(Answer, false);
+                i = alreadyDone(i, Answer);
             } else {
+                Answer += secretNumberAnswer(Indication, i, LastAnswer, PerformedTest);
+            }
+        }
+        this.AlreadyDone.add(Answer);
+        this.OldAnswer.add(Answer);
+        return Answer;
+    }
 
-                System.out.println("Entrer un chiffre");
+    String answerPlayer(String ModeJeux, int NbCase) {
+        String Selection = "";
+        String x = "";
+        for (int i = 0; i < NbCase; i++) {   //1er essai de l'ordinateur
+            System.out.println("Entrer une combinaison");
+            x += ConsoleUtils.saisirInt();
+            System.out.println(x.length() + " " + NbCase);
+            System.out.println(x.length() == NbCase);
+            if (x.length() == NbCase) {
+                Selection = x;
+                i = NbCase + 1;
+            }
+            while (x.length() != NbCase) {
                 x = "";
-                while (x.length() != 1) {
-                    x += ConsoleUtils.saisirInt();
-                    if (x.length() > 1) {
-                        x = "";
-                        System.out.println("Entrer un SEUL  chiffre");
+                x += ConsoleUtils.saisirInt();
+                System.out.println(x);
+                if (ModeJeux.equalsIgnoreCase("MasterMind")) {
+                    while (!x.equals(antiDuplicateString(Selection, x))) {
+                        x = antiDuplicateChar(x, true);
+                        System.out.println("Veuillez ne pas entrer le meme");
                     }
                 }
-                reponse += x;
             }
-
         }
-        return reponse;
+        return Selection;
     }
 }
 
