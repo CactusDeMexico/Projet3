@@ -1,19 +1,16 @@
 package com.openclassrooms.mpancarte;
 
 public class Menu {
-    public int NbCase;
-    public int NbEssai;
-    public String ModeJoueur = "";
-    public String ModeJeux = "";
-    public int NbCouleurSelec;
-    public int NbCaseCouleur;
-    private String JeuxSelec = "";
+
+    public String GameMode = "";
+
+    private String GameSelected = "";
 
 
     public void Launcher(String Mode) throws Exception{
         MasterMind JeuM = new MasterMind();
         SecretNumber JeuS = new SecretNumber();
-        if (this.JeuxSelec.equalsIgnoreCase("MasterMind")) {
+        if (this.GameSelected.equalsIgnoreCase("MasterMind")) {
             JeuM.Plateau(Mode);
 
         } else {
@@ -32,33 +29,24 @@ public class Menu {
         } while (selection < 0 || selection > 3);
         switch (selection) {
             case 1:
-                this.ModeJeux = "challenger";
+                this.GameMode = "challenger";
 
-                Launcher(this.ModeJeux);
+                Launcher(this.GameMode);
                 break;
             case 2:
-                this.ModeJeux = "defenseur";
-                Launcher(this.ModeJeux);
+                this.GameMode = "defenseur";
+                Launcher(this.GameMode);
                 break;
             case 3:
-                this.ModeJeux = "duel";
+                this.GameMode = "duel";
 
-                Launcher(this.ModeJeux);
+                Launcher(this.GameMode);
                 break;
         }
     }
-    public int Init()throws Exception{
-        ReadValues Data = new ReadValues();
-        this.ModeJoueur = Data.getModeJoueur();
-        this.NbCaseCouleur = Integer.valueOf(Data.getNbCaseCouleur());
-        this.NbCase = Integer.valueOf(Data.getNbCase());
-        this.NbEssai = Integer.valueOf(Data.getNbEssai());
-        this.NbCouleurSelec = Integer.valueOf(Data.getNbCouleur());
-        return this.NbCouleurSelec;
-    }
+
     //definition variable
     public void Menu() throws Exception {
-        Init();
         int choix = 3;
         while (choix != 0) {
             System.out.println("\033[31m___________Accueil ___________");
@@ -67,11 +55,11 @@ public class Menu {
             System.out.println("\033[33m0________Quitter______________");
             choix = ConsoleUtils.saisirInt();
             if (choix == 1) {
-                this.JeuxSelec = "SecretNumber";
+                this.GameSelected = "SecretNumber";
             }
             if (choix == 2) {
 
-                this.JeuxSelec = "MasterMind";
+                this.GameSelected = "MasterMind";
             }
             if (choix < 3 && choix > 0) {
                 this.ModeJeux();
