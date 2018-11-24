@@ -28,7 +28,7 @@ class MasterMind extends Game {
         return test;
     }
 
-    protected String masterMindAnswer(String SelectedColor, int GoodColor, int ColorExist, int PerformedTest, int NbCase,String last) throws Exception {
+    protected String masterMindAnswer(String SelectedColor, int GoodColor, int ColorExist, int PerformedTest, int NbCase, String last) throws Exception {
 
         ConfigReader Data = new ConfigReader();
         String Answer = "";
@@ -42,12 +42,12 @@ class MasterMind extends Game {
 
             if (ColorExist == NbCase || (GoodColor + ColorExist) == NbCase) {// recherche precise
 
-                String phy[] =last.split(",");
+                String phy[] = last.split(",");
 
-                System.out.println("toutes les couleur on été trouvé " +  phy.length);
-                SelectedColor = phy[ phy.length-1];
-                System.out.println("toutes les couleur on été trouvé voici les BONNES COULEURS  "+SelectedColor);
-              }
+                System.out.println("toutes les couleur on été trouvé " + phy.length);
+                SelectedColor = phy[phy.length - 1];
+                System.out.println("toutes les couleur on été trouvé voici les BONNES COULEURS  " + SelectedColor);
+            }
               /*
             else if(ColorExist + GoodColor >this.Indication.get(0)){
                 int phy = this.AlreadyDone.size() - 1;
@@ -61,7 +61,7 @@ class MasterMind extends Game {
                 //todo:ne changer qu'un chiffre dans array almost
 
             }*/
-            System.out.println("VOCI LA LISTE DES COULEURS  "+SelectedColor);
+            System.out.println("VOCI LA LISTE DES COULEURS  " + SelectedColor);
             nb = "";
             nb += SelectedColor.charAt(Random.nextInt(SelectedColor.length()));
         }
@@ -78,17 +78,21 @@ class MasterMind extends Game {
                 nb = random.nextInt(Couleur.length());
                 test += antiDuplicate(test, String.valueOf(nb), Couleur.length());
             } else {
-                System.out.println("Veuillez selectionner un chiffre dans " + Couleur);
+                System.out.println("Veuillez selectionner un chiffre dans " + Couleur + " :10 sortie");
                 nb = ConsoleUtils.saisirInt();
-
-                while (String.valueOf(nb).length() != 1 || nb >= Couleur.length()) {
-                    System.out.println("Veuillez selectionner un chiffre dans " + Couleur);
-                    nb = ConsoleUtils.saisirInt();
+                if (nb == 10) {
+                    g = Couleur.length() + 1;
+                } else {
+                    while (String.valueOf(nb).length() != 1 || nb >= Couleur.length() || nb==10 ){
+                        System.out.println("Veuillez selectionner un chiffre dans " + Couleur);
+                        nb = ConsoleUtils.saisirInt();
+                    }
+                    while (nb != Integer.parseInt(antiDuplicateString(test, String.valueOf(nb))) || nb==10 ) {
+                        System.out.println("Veuillez ne pas entrer le meme");
+                        nb = ConsoleUtils.saisirInt();
+                    }
+                    test += nb;
                 }
-                while (nb != Integer.parseInt(antiDuplicateString(test, String.valueOf(nb)))) {
-                    System.out.println("Veuillez ne pas entrer le meme");
-                }
-                test += nb;
             }
             selection.append(Couleur.charAt(Character.getNumericValue(test.charAt(g))));
         }
@@ -160,9 +164,7 @@ class MasterMind extends Game {
         }
         this.LastAnswers.add(answer);
 
-
-
-         return trials;
+        return trials;
     }
 
     //todo: ameliorer IA si 2 couleur sont trouver chercher une autre et couleur finirr les proet 45 en 2 jours
