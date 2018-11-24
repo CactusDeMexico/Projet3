@@ -21,7 +21,7 @@ public class Main {
        // obj.runMe("Main");
        // MasterMind Jeux = new MasterMind();
         //Jeux.Final();
-        //Jeux.Plateau();
+        //Jeux.boardGame();
         //System.out.println(Jeux.Final());
     }
 }

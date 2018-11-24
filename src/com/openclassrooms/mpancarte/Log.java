@@ -11,24 +11,20 @@ public class Log {
 
         Log obj = new Log();
         obj.runMe("Main");
-
     }
 
-    public void runMe(String parameter){
+    public void runMe(String parameter) {
 
-        if(logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             logger.debug("This is debug : " + parameter);
         }
 
-        if(logger.isInfoEnabled()){
+        if (logger.isInfoEnabled()) {
             logger.info("This is info : " + parameter);
         }
 
         logger.warn("This is warn : " + parameter);
         logger.error("This is error : " + parameter);
         logger.fatal("This is fatal : " + parameter);
-
     }
-
-
 }

@@ -11,10 +11,10 @@ public class Menu {
         MasterMind JeuM = new MasterMind();
         SecretNumber JeuS = new SecretNumber();
         if (this.GameSelected.equalsIgnoreCase("MasterMind")) {
-            JeuM.Plateau(Mode);
+            JeuM.boardGame(Mode);
 
         } else {
-            JeuS.Plateau(Mode);
+            JeuS.boardGame(Mode);
         }
     }
 

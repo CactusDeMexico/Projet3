@@ -64,5 +64,33 @@ public class ConsoleUtils {
             System.out.println("Erreur de lecture clavier");
         }
         return chaine.charAt(0);
+    }/*
+    String number;
+System.out.println("Enter number:");
+    number = keyboard.nextLine();
+if (!number.matches("[0-9]+")) {
+        System.out.println("Invalid number");
+    }*/
+    public static String inputStringNumber() {
+
+        String string = "";
+        while (true) {
+        try {
+            String regex = "[0-9]+";
+            string = entree.readLine();//lecture de la chaine
+            int nb = Integer.parseInt(string);
+
+            if (!string.matches(regex)) {
+                System.out.println("Invalid number "+nb);
+            }
+            return string;
+        } catch (IOException exp) {
+            System.out.println("Erreur de lecture clavier");
+        }
+        catch (NumberFormatException exp){
+            System.out.println("Erreur de nombre");
+        }
+
+    }
     }
 }
