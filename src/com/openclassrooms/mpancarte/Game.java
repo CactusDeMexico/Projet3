@@ -6,7 +6,7 @@ import java.util.Random;
 abstract class Game {
     protected ArrayList<String> AlreadyDone = new ArrayList<>();
     protected ArrayList<String> OldAnswer = new ArrayList<>();
-    protected ArrayList<String> BannedColors = new ArrayList<>();
+    protected String BannedColors;
     protected ArrayList<String> AlmostFind = new ArrayList<>();
     protected ArrayList<Integer> Indication = new ArrayList<>();
 
@@ -130,7 +130,7 @@ abstract class Game {
         SecretNumber Jeux = new SecretNumber();
         MasterMind Jeux2 = new MasterMind();
         String AnswerToCheck;
-        int index = BannedColors.size() - 1;
+
         System.out.println(" GameMode " + GameMode + " NbCase " + NbCase + " Indication " + Indication + " Lastanswer " + LastAnswer);
         String last=lastAnswer();
         System.out.println(last+"__________________________");
@@ -141,13 +141,9 @@ abstract class Game {
                 int ColorExist = Integer.parseInt(String.valueOf(format[1]));
 
                 AnswerToCheck = Jeux2.masterMindAnswer(Indication, GoodColor, ColorExist, PerformedTest, NbCase,last);
-                if (ColorExist + GoodColor == 0) {
-                    String phy[] =last.split(",");
-
-                    this.BannedColors.add( phy[ phy.length-1]);
-                }
-                if (index >= 0) {
-                    test += BannedColors.get(index);
+                if (ColorExist + GoodColor == 0 && PerformedTest>1) {
+                    this.BannedColors+=last;
+                    test +=this.BannedColors;
                     System.out.println("Les couleurs banni sont "+ test);
                 }
                 test += antiDuplicateString2(test, AnswerToCheck, Indication.length());

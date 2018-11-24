@@ -13,7 +13,7 @@ class MasterMind extends Game {
     private boolean PlayerTurn = false;
     private boolean ComputerTurn = random.nextBoolean();
     private String Clue;
-    private String liste[] = new String[10];
+
     private ArrayList<String> LastAnswers = new ArrayList<>();
     //Map<Integer, String> LastAnswers = new HashMap<>();
 
@@ -46,11 +46,9 @@ class MasterMind extends Game {
 
                 System.out.println("toutes les couleur on été trouvé " +  phy.length);
                 SelectedColor = phy[ phy.length-1];
-              } else if (ColorExist + GoodColor == 0) {
-                String phy[] =last.split(",");
-
-                this.BannedColors.add( phy[ phy.length-1]);
-            }/*
+                System.out.println("toutes les couleur on été trouvé voici les BONNES COULEURS  "+SelectedColor);
+              }
+              /*
             else if(ColorExist + GoodColor >this.Indication.get(0)){
                 int phy = this.AlreadyDone.size() - 1;
                 this.AlmostFind.add( this.AlreadyDone.get(phy));
@@ -63,7 +61,7 @@ class MasterMind extends Game {
                 //todo:ne changer qu'un chiffre dans array almost
 
             }*/
-
+            System.out.println("VOCI LA LISTE DES COULEURS  "+SelectedColor);
             nb = "";
             nb += SelectedColor.charAt(Random.nextInt(SelectedColor.length()));
         }
@@ -141,9 +139,6 @@ class MasterMind extends Game {
         String answer;
         int length;
         length = Combination.length();
-        if (trials > 0) {
-            System.out.println("this.liste" + this.liste[trials] + " la reponse de this.LastAnswer " + this.LastAnswers.get(this.LastAnswers.size() - 1));
-        }
         System.out.println(ModeJoueur ? "\033[33m La combinaison  du Joueur est: " + Combination : "\033[33m C'est le tour de l'ordinateur:");
         if (trials == 0) {
             answer = answerIA("MasterMind", length, trials, SelectedColor, "0,0");
@@ -165,7 +160,7 @@ class MasterMind extends Game {
         }
         this.LastAnswers.add(answer);
 
-        this.liste[trials] = answer;
+
 
          return trials;
     }
