@@ -8,11 +8,10 @@ abstract class Game {
     private ArrayList<Integer> wellPlaced = new ArrayList<>();
     private ArrayList<Integer> existColor = new ArrayList<>();
     private int indexChar = -1;
-    private String colorsFound = "";
     private ArrayList<String> rightPlaced = new ArrayList<>();
     private String[] wrongPlaced;
 
-    String antiDuplicateChar2(String selection, String test, int performedTest) {
+    String antiDuplicateChar(String selection, String test, int performedTest) {
         Random random = new Random();
         String lastAnswers[] = selection.split(",");
         for (String lastAnswer : lastAnswers) {
@@ -23,55 +22,11 @@ abstract class Game {
                 }
             }
         }
-
         return test;
     }
 
-    private String antiDuplicateString(String selection, String test) {
-        Random random = new Random();
-        if (selection.contains(test)) {
-            while (selection.contains(test)) {
-                test = "";
-                test += random.nextInt(10);
-            }
-        }
 
-        return test;
-    }
-
-    //todo:supprimer fichier config et ragder lerreur envoyer puis catch cette erreur
-
-    private String antiDuplicateChar(String selection) {
-        int count = 3;
-        while (count > 1) {
-            count = 0;
-            for (int i = 0; i < selection.length(); i++) {
-                int index = 0;
-                if (count == 1) {
-                    count = 0;
-                }
-                while (index < selection.length()) {
-                    if (selection.charAt(i) == selection.charAt(index)) {
-                        count++;
-                    }
-                    index++;
-                }
-            }
-            if (count > 1) {
-                StringBuilder selectionBuilder = new StringBuilder(selection);
-                while (selectionBuilder.toString().equals("")) {
-                    if (selectionBuilder.toString().equals("")) {
-                        System.out.println("Veuillez ne pas entrer les memes chiffres ");
-                        selectionBuilder.append(ConsoleUtils.intInput());
-                    }
-                }
-
-                selection = selectionBuilder.toString();
-            }
-        }
-        return selection;
-    }
-
+    //set and return combinaison pc
     String selectionIA(int nbCase) {
         StringBuilder selection = new StringBuilder();
         Random random = new Random();
@@ -79,10 +34,10 @@ abstract class Game {
         for (int i = 0; i < nbCase; i++) {
             selection.append(random.nextInt(10));
         }
-
         return selection.toString();
     }
 
+    //set and return combinaison player
     String selectionPlayer(String gameMode) {
         String selection = "";
         boolean done = false;
@@ -93,7 +48,6 @@ abstract class Game {
                 System.out.println("Selectionner  les couleurs ");
                 jeux.printColors();
                 nb = ConsoleUtils.inputStringNumber();
-                // nb = antiDuplicateChar(nb);
             } else {
                 System.out.println("Entrer  La combinaison ");
                 nb = ConsoleUtils.inputStringNumber();
@@ -104,6 +58,7 @@ abstract class Game {
         return selection;
     }
 
+    // return last answer
     private String lastAnswer() {
         StringBuilder previousData = new StringBuilder();
 
@@ -113,6 +68,7 @@ abstract class Game {
         return previousData.toString();
     }
 
+    // return last existColor
     int existColor() {
         StringBuilder previousData = new StringBuilder();
         if (this.existColor.size() == 0) {
@@ -127,6 +83,7 @@ abstract class Game {
         return Integer.parseInt(existColors[existColors.length - 1]);
     }
 
+    // return last goodColor
     private int goodColor() {
         StringBuilder previousData = new StringBuilder();
         if (this.wellPlaced.size() == 0) {
@@ -140,29 +97,47 @@ abstract class Game {
         return Integer.parseInt(goodExist[goodExist.length - 1]);
     }
 
-    private void foundColorsF(String colors) {
-
-        if (!this.colorsFound.contains(colors) && colors.length() == 1) {
-            this.colorsFound += colors;
-        } else if (this.colorsFound.contains(colors)) {
-            for (int x = 0; x < colors.length(); x++) {
-
-                if (!this.colorsFound.contains(Character.toString(colors.charAt(x)))) {
-                    //noinspection StringConcatenationInLoop
-                    this.colorsFound += colors;
-                }
-            }
-        }
-    }
-
+    // set good answer
     private void rightPlaceColors(String colors, int place) {
 
         this.rightPlaced.set(place, colors);
     }
 
+    // set banned  answer
     private void wrongPlaceColors(String colors, int place) {
 
         this.wrongPlaced[place] += colors;
+    }
+
+    // define banned answer and good answer
+    private void ia(int lastColorExist, int lastGoodColor, String lastAnswer, int performedTest, int nbCase, String last, int index) {
+        if (performedTest == 0) {
+            this.wrongPlaced = new String[nbCase];
+            for (int u = 0; u < nbCase; u++) {
+                this.rightPlaced.add("_");
+                this.wrongPlaced[u] = "_";
+            }
+        }
+        String[] format = lastAnswer.split(",");
+        int goodColor = Integer.parseInt(String.valueOf(format[0]));
+        int colorExist = Integer.parseInt(String.valueOf(format[1]));
+        if (performedTest > 1 && index == 0) {
+            MasterMind game = new MasterMind();
+            String[] wrongColors = game.iAFindWrongPlacedColors(goodColor, nbCase, last, lastGoodColor, lastColorExist, colorExist);
+            int[] rightPlaced = game.iAFindPlacedColors(goodColor, nbCase, last, lastGoodColor);
+            int rightPlaceIndex = rightPlaced[1];
+            String wrongPlaceIndex = wrongColors[1];
+            String rightNumber = Integer.toString(rightPlaced[0]);
+            String wrongNumber = wrongColors[0];
+            if (rightPlaceIndex >= 0) {
+                this.rightPlaceColors(rightNumber, rightPlaceIndex);
+            }
+            if (!wrongNumber.equals("_")) {
+                this.wrongPlaceColors(wrongNumber, Integer.parseInt(wrongPlaceIndex));
+            }
+        }
+        this.existColor.add(colorExist);
+        this.wellPlaced.add(goodColor);
     }
 
     String answerIA(String gameMode, int nbCase, int performedTest, String indication, String lastAnswer) throws Exception {
@@ -171,61 +146,28 @@ abstract class Game {
         SecretNumber jeux = new SecretNumber();
         MasterMind jeux2 = new MasterMind();
         String answerToCheck;
-        String last = lastAnswer();
-        int lastColorExist;
-        int lastGoodColor;
         for (int i = 0; i < nbCase; i++) {   //1er essai de l'ordinateur
 
             if (gameMode.equalsIgnoreCase("MasterMind")) {
                 if (this.indexChar == nbCase) {
                     this.indexChar = 0;
                 }
-                if (performedTest == 0) {
-                    this.wrongPlaced = new String[nbCase];
-                    for (int u = 0; u < nbCase; u++) {
-                        this.rightPlaced.add("_");
-                        this.wrongPlaced[u] = "_";
-                    }
-                }
-                String[] format = lastAnswer.split(",");
-                int goodColor = Integer.parseInt(String.valueOf(format[0]));
-                int colorExist = Integer.parseInt(String.valueOf(format[1]));
-                //todo: fonction intit
-                if (performedTest > 1 && i == 0) {
-                    lastColorExist = this.existColor();
-                    lastGoodColor = this.goodColor();
-                    String[] colorsPrecision = (jeux2.iAFoundedColors(colorExist, nbCase, last, lastColorExist)).split(",");
-                    this.foundColorsF(colorsPrecision[0]);
-                    String[] wrongColors = jeux2.iAFindWrongPlacedColors(goodColor, performedTest, nbCase, last, lastGoodColor, lastColorExist, colorExist);
-                    int[] rightPlaced = jeux2.iAFindPlacedColors(goodColor, performedTest, nbCase, last, lastGoodColor);
-                    int rigthPlaceIndex = rightPlaced[1];
-                    String wrongPlaceIndex = wrongColors[1];
-                    String rightNumber = Integer.toString(rightPlaced[0]);
-                    String wrongNumber = wrongColors[0];
-                    if (rigthPlaceIndex >= 0) {
-                        this.rightPlaceColors(rightNumber, rigthPlaceIndex);
-                    }
-                    if (!wrongNumber.equals("_")) {
-                        this.wrongPlaceColors(wrongNumber, Integer.parseInt(wrongPlaceIndex));
-                    }
-                }
+                this.ia(this.existColor(), this.goodColor(), lastAnswer, performedTest, nbCase, lastAnswer(), i);
                 StringBuilder foundedC = new StringBuilder();
                 StringBuilder wrongAnswer = new StringBuilder();
                 for (int u = 0; u < nbCase; u++) {
                     foundedC.append(this.rightPlaced.get(u));
                     wrongAnswer.append(this.wrongPlaced[u]).append(";");
                 }
-                answerToCheck = jeux2.masterMindAnswer(indication, wrongAnswer.toString(), foundedC.toString(), performedTest, nbCase, last, this.indexChar);
+                answerToCheck = jeux2.masterMindAnswer(indication, wrongAnswer.toString(), foundedC.toString(), performedTest, nbCase, lastAnswer(), this.indexChar);
                 if (answerToCheck.length() != nbCase && performedTest == 0) {
                     test.append(answerToCheck);
                 } else {
                     test = new StringBuilder(answerToCheck);
                     i = nbCase;
                 }
-                this.existColor.add(colorExist);
-                this.wellPlaced.add(goodColor);
             } else {
-                test.append(jeux.secretNumberAnswer(indication, i, lastAnswer, performedTest, last));
+                test.append(jeux.secretNumberAnswer(indication, i, lastAnswer, performedTest, lastAnswer()));
             }
         }
         indexChar++;
@@ -234,27 +176,21 @@ abstract class Game {
         return answer;
     }
 
-    String answerPlayer(String gameMode, int nbCase) {
-        String selection = "";
+    String answerPlayer(int nbCase) {
+        StringBuilder selection = new StringBuilder();
         String x = "";
         System.out.println("Entrer une combinaison de " + nbCase + " chiffres");
         x += ConsoleUtils.intInput();
         if (x.length() == nbCase) {
-            selection = x;
+            selection = new StringBuilder(x);
         } else {
             while (selection.length() != nbCase) {
                 x = ConsoleUtils.inputStringNumber();
-                if (gameMode.equalsIgnoreCase("MasterMind")) {
-                    while (!x.equals(antiDuplicateString(selection, x))) {
-                        x = antiDuplicateChar(x);
-                        System.out.println("Veuillez ne pas entrer le meme");
-                    }
-                }
-                selection += x;
+                selection.append(x);
             }
         }
 
-        return selection;
+        return selection.toString();
     }
 }
 

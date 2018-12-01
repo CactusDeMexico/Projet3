@@ -29,11 +29,11 @@ class SecretNumber extends Game {
                     break;
                 case "-":
                     selection += random.nextInt(Character.getNumericValue(valueOf(test.charAt(i))));
-                    selection = antiDuplicateChar2(lastAnswer, selection, i);
+                    selection = this.antiDuplicateChar(lastAnswer, selection, i);
                     break;
                 case "+":
                     selection += random.nextInt(10 - Character.getNumericValue(valueOf(test.charAt(i))));
-                    selection = antiDuplicateChar2(lastAnswer, selection, i);
+                    selection = this.antiDuplicateChar(lastAnswer, selection, i);
                     break;
             }
         }
@@ -71,7 +71,7 @@ class SecretNumber extends Game {
     private int playerTurn(String secretNumber, int trials, boolean gamerMode) throws Exception {
         ConfigReader data = new ConfigReader();
         System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + secretNumber : "\033[36m C'est votre tour");
-        String answer = this.answerPlayer("SecretNumber", data.getCases());
+        String answer = this.answerPlayer(data.getCases());
         String indication = checkedAnswer(secretNumber, data.getCases(), answer);
         return iA(secretNumber, answer, indication, trials, "e Joueur");
     }

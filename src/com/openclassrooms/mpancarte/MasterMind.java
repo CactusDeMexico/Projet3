@@ -75,7 +75,7 @@ class MasterMind extends Game {
         return selection.toString() + "," + banned;
     }
 
-    int[] iAFindPlacedColors(int goodColor, int performedTest, int nbCase, String last, int oldGoodColor) {
+    int[] iAFindPlacedColors(int goodColor, int nbCase, String last, int oldGoodColor) {
         int number = -1;
         int index = -1;
         String bestAnswer;
@@ -84,33 +84,31 @@ class MasterMind extends Game {
         //verifier match
         int count = 0;
         int charSelected = 0;
-        if (performedTest > 1) {
-            for (int i = 0; i < nbCase; i++) {
-                if (!(Character.toString(lastAnswers[lastAnswers.length - 2].charAt(i)).equals(Character.toString(lastAnswers[lastAnswers.length - 1].charAt(i))))) {
-                    count++;
-                    charSelected = i;
-                }
+
+        for (int i = 0; i < nbCase; i++) {
+            if (!(Character.toString(lastAnswers[lastAnswers.length - 2].charAt(i)).equals(Character.toString(lastAnswers[lastAnswers.length - 1].charAt(i))))) {
+                count++;
+                charSelected = i;
             }
-            if (goodColor > oldGoodColor) {
-                bestAnswer = lastAnswers[lastAnswers.length - 1];
-                if (count == 1) {
-                    number = Character.getNumericValue(bestAnswer.charAt(charSelected));
-                    index = charSelected;
-                }
-                return new int[]{number, index};
-            } else if (goodColor < oldGoodColor) {
-                bestAnswer = lastAnswers[lastAnswers.length - 2];
-                if (count == 1) {
-                    number = Character.getNumericValue(bestAnswer.charAt(charSelected));
-                    index = charSelected;
-                }
+        }
+        if (goodColor > oldGoodColor) {
+            bestAnswer = lastAnswers[lastAnswers.length - 1];
+            if (count == 1) {
+                number = Character.getNumericValue(bestAnswer.charAt(charSelected));
+                index = charSelected;
             }
-            System.out.println("XXX COULEUR TROUVER " + number + " index " + index);
+            return new int[]{number, index};
+        } else if (goodColor < oldGoodColor) {
+            bestAnswer = lastAnswers[lastAnswers.length - 2];
+            if (count == 1) {
+                number = Character.getNumericValue(bestAnswer.charAt(charSelected));
+                index = charSelected;
+            }
         }
         return new int[]{number, index};
     }
 
-    String[] iAFindWrongPlacedColors(int goodColor, int performedTest, int nbCase, String last, int oldGoodColor, int oldExistColor, int existColor) {
+    String[] iAFindWrongPlacedColors(int goodColor,  int nbCase, String last, int oldGoodColor, int oldExistColor, int existColor) {
         String number = "_";
         String index = "_";
         String bestAnswer;
@@ -118,33 +116,31 @@ class MasterMind extends Game {
 
         int count = 0;
         int charSelected = 0;
-        if (performedTest > 1) {
-            for (int i = 0; i < nbCase; i++) {
-                if (!(Character.toString(lastAnswers[lastAnswers.length - 2].charAt(i)).equals(Character.toString(lastAnswers[lastAnswers.length - 1].charAt(i))))) {
-                    count++;
-                    charSelected = i;
-                }
+        for (int i = 0; i < nbCase; i++) {
+            if (!(Character.toString(lastAnswers[lastAnswers.length - 2].charAt(i)).equals(Character.toString(lastAnswers[lastAnswers.length - 1].charAt(i))))) {
+                count++;
+                charSelected = i;
             }
-            if (goodColor < oldGoodColor) {
-                bestAnswer = lastAnswers[lastAnswers.length - 1];
-                if (count == 1) {
-                    number = Character.toString(bestAnswer.charAt(charSelected));
-                    index = Integer.toString(charSelected);
-                }
-            } else if (goodColor > oldGoodColor) {
-                bestAnswer = lastAnswers[lastAnswers.length - 2];
-                if (count == 1) {
-                    number = Character.toString(bestAnswer.charAt(charSelected));
-                    index = Integer.toString(charSelected);
-                }
+        }
+        if (goodColor < oldGoodColor) {
+            bestAnswer = lastAnswers[lastAnswers.length - 1];
+            if (count == 1) {
+                number = Character.toString(bestAnswer.charAt(charSelected));
+                index = Integer.toString(charSelected);
             }
-            if (goodColor == oldGoodColor && oldExistColor == existColor) {
-                bestAnswer = lastAnswers[lastAnswers.length - 2];
-                String answer = lastAnswers[lastAnswers.length - 1];
-                if (count == 1) {
-                    number = Character.toString(bestAnswer.charAt(charSelected)) + Character.toString(answer.charAt(charSelected));
-                    index = Integer.toString(charSelected);
-                }
+        } else if (goodColor > oldGoodColor) {
+            bestAnswer = lastAnswers[lastAnswers.length - 2];
+            if (count == 1) {
+                number = Character.toString(bestAnswer.charAt(charSelected));
+                index = Integer.toString(charSelected);
+            }
+        }
+        if (goodColor == oldGoodColor && oldExistColor == existColor) {
+            bestAnswer = lastAnswers[lastAnswers.length - 2];
+            String answer = lastAnswers[lastAnswers.length - 1];
+            if (count == 1) {
+                number = Character.toString(bestAnswer.charAt(charSelected)) + Character.toString(answer.charAt(charSelected));
+                index = Integer.toString(charSelected);
             }
         }
         return new String[]{number, index};
@@ -270,7 +266,9 @@ class MasterMind extends Game {
         return new int[]{goodColor, colorExist};
     }
 
-    private int iA(String combination, String answer, int goodColor, int colorExist, int trials, String player) throws Exception {
+
+
+    private int checkAnswer(String combination, String answer, int goodColor, int colorExist, int trials, String player) throws Exception {
         ConfigReader data = new ConfigReader();
         if (combination.contentEquals(answer)) {
             System.out.println("Gagné la Reponse est " + answer + " C'est l" + player + " qui gagne");
@@ -285,11 +283,11 @@ class MasterMind extends Game {
     private int playerTurn(String combination, int trials, boolean gamerMode) throws Exception {
         ConfigReader data = new ConfigReader();
         System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + combination : "\033[36m   C'est votre tour");
-        String answer = answerPlayer("MasterMind", data.getColors());
+        String answer = answerPlayer(data.getColors());
         int indication[] = color(answer, combination);
         int goodColor = indication[0];
         int colorExist = indication[1];
-        return iA(combination, answer, goodColor, colorExist, trials, "e joueur");
+        return checkAnswer(combination, answer, goodColor, colorExist, trials, "e joueur");
     }
 
     private int computerTurn(String combination, String selectedColor, int trials, boolean gamerMode) throws Exception {
@@ -306,14 +304,14 @@ class MasterMind extends Game {
             goodColor = indication[0];
             colorExist = indication[1];
             this.Clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
-            trials = iA(combination, answer, goodColor, colorExist, trials, "ordinateur");
+            trials = checkAnswer(combination, answer, goodColor, colorExist, trials, "ordinateur");
         } else {
             answer = answerIA("MasterMind", length, trials, selectedColor, this.Clue);
             int clue[] = color(answer, combination);
             goodColor = clue[0];
             colorExist = clue[1];
             this.Clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
-            trials = iA(combination, answer, goodColor, colorExist, trials, "ordinateur");
+            trials = checkAnswer(combination, answer, goodColor, colorExist, trials, "ordinateur");
         }
 
         return trials;
