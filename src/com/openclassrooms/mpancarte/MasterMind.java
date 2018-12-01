@@ -344,14 +344,14 @@ class MasterMind extends Game {
             case "duel":
 
                 String selectedColorPlayer = selectionPlayer("MasterMind");
-                String combinaisonPlayer = combinationSelection(selectedColorPlayer, true);
+                String combinationSelection = combinationSelection(selectedColorPlayer, true);
                 selectedColor = selectionIA(data.getColors());
                 combination = combinationSelection(selectedColor, false);
 
                 while (data.getTrials() > trials) {
                     while (!(PcTurn && PlayerTurn) || trials < data.getTrials()) {
                         if (ComputerTurn && trials < data.getTrials()) {
-                            trials = computerTurn(combinaisonPlayer, selectedColorPlayer, trials, data.isDeveloperMode());
+                            trials = computerTurn(combinationSelection, selectedColorPlayer, trials, data.isDeveloperMode());
                             ComputerTurn = false;
                             PcTurn = true;
                         }

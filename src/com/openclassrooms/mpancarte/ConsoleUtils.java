@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class ConsoleUtils {
     private static BufferedReader entree = new BufferedReader(new InputStreamReader(System.in));
 
-    //lecture entier
+    //READ INT
     static int intInput() {
         while (true) {
             try {
@@ -22,7 +22,7 @@ public class ConsoleUtils {
         }
     }
 
-    //lecture
+    //READ FLOAT
     public static float floatInput() {
         float nb = 0;
         String chaine;
@@ -42,7 +42,7 @@ public class ConsoleUtils {
 
     }
 
-    //lecture  chaine
+    //READ sTRING
     public static String stringInput() {
 
         String chaine = "";
@@ -54,7 +54,7 @@ public class ConsoleUtils {
         return chaine;
     }
 
-    //lecture  un caract
+    //READ CHAR
     public static char charInput() {
 
         String chaine = "";
@@ -65,7 +65,7 @@ public class ConsoleUtils {
         }
         return chaine.charAt(0);
     }
-
+    //READ STRING WHO COUNTER ONLY INTEGER
     static String inputStringNumber() {
 
         String selection ;

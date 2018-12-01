@@ -7,11 +7,7 @@ public class Log {
 
     public static Logger logger = LogManager.getLogger(Log.class);
 
-    public static void main(String[] args) {
 
-        Log obj = new Log();
-        obj.runMe("Main");
-    }
 
     public void runMe(String parameter) {
 

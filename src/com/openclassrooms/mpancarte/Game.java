@@ -72,15 +72,15 @@ abstract class Game {
         return selection;
     }
 
-    String selectionIA( int nbCase) {
-        String selection = "";
+    String selectionIA(int nbCase) {
+        StringBuilder selection = new StringBuilder();
         Random random = new Random();
 
         for (int i = 0; i < nbCase; i++) {
-            selection += random.nextInt(10);
+            selection.append(random.nextInt(10));
         }
 
-        return selection;
+        return selection.toString();
     }
 
     String selectionPlayer(String gameMode) {
@@ -148,6 +148,7 @@ abstract class Game {
             for (int x = 0; x < colors.length(); x++) {
 
                 if (!this.colorsFound.contains(Character.toString(colors.charAt(x)))) {
+                    //noinspection StringConcatenationInLoop
                     this.colorsFound += colors;
                 }
             }
