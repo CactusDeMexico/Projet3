@@ -90,7 +90,7 @@ class SecretNumber extends Game {
         int trials = 0;
         switch (mode) {
             case "challenger":
-                secretNumber = selectionIA("SecretNumber", data.getCases());
+                secretNumber = selectionIA( data.getCases());
                 while (trials < data.getTrials()) {
                     trials = playerTurn(secretNumber, trials, data.isDeveloperMode());
                     trials++;
@@ -105,7 +105,7 @@ class SecretNumber extends Game {
                 break;
             case "duel":
                 String secretNumberPlayer = this.selectionPlayer("SecretNumber");
-                secretNumber = selectionIA("SecretNumber", data.getCases());
+                secretNumber = selectionIA( data.getCases());
                 while (trials < data.getTrials()) {
                     while (!(pcTurn && playerTurn) || trials < data.getTrials()) {
                         if (computerTurn && trials < data.getTrials()) {

@@ -26,27 +26,6 @@ class MasterMind extends Game {
         return selection;
     }
 
-    private String antiDuplicate(String selection, String test, int max) {
-        Random random = new Random();
-        if (selection.contains(test)) {
-            while (selection.contains(test)) {
-                test = "";
-                test += random.nextInt(max);
-            }
-        }
-        return test;
-    }
-/*
-    String iAFindColors(int goodColor, int colorExist, int nbCase, String last) {
-        String selectedColor = "";
-        if (colorExist == nbCase || (goodColor + colorExist) == nbCase) {// recherche precise
-            String lastAnswers[] = last.split(",");
-            selectedColor = lastAnswers[lastAnswers.length - 1];
-            System.out.println("toutes les couleur on été trouvé voici les BONNES COULEURS IA " + selectedColor);
-        }
-        return selectedColor;
-    }*/
-
     String iAFoundedColors(int colorExist, int nbCase, String last, int existColors) {
         String lastAnswers[] = last.split(",");
         String answer;
@@ -99,7 +78,7 @@ class MasterMind extends Game {
     int[] iAFindPlacedColors(int goodColor, int performedTest, int nbCase, String last, int oldGoodColor) {
         int number = -1;
         int index = -1;
-        String bestAnswer = "";
+        String bestAnswer;
         String lastAnswers[] = last.split(",");
         System.out.println("____Good color :" + goodColor + " old good color " + oldGoodColor);
         //verifier match
@@ -134,7 +113,7 @@ class MasterMind extends Game {
     String[] iAFindWrongPlacedColors(int goodColor, int performedTest, int nbCase, String last, int oldGoodColor, int oldExistColor, int existColor) {
         String number = "_";
         String index = "_";
-        String bestAnswer = "";
+        String bestAnswer;
         String lastAnswers[] = last.split(",");
 
         int count = 0;
@@ -171,16 +150,14 @@ class MasterMind extends Game {
         return new String[]{number, index};
     }
 
-    String masterMindAnswer(String selectedColor, String wrongAnswer, String righPlacedColor, int performedTest, int nbCase, String last, int indexChar) throws Exception {
-        ConfigReader data = new ConfigReader();
+    String masterMindAnswer(String selectedColor, String wrongAnswer, String rightPlacedColor, int performedTest, int nbCase, String last, int indexChar) {
+
         String answer = "";
-        String nb ;
-        String test ;
+        String nb;
+        String test;
         Random random = new Random();
 
-        int remainingTest = data.getTrials() - performedTest;
-        System.out.println(performedTest+"-------------");
-        if (remainingTest == data.getTrials()) {
+        if (performedTest == 0) {
             nb = "";
             nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
             answer += nb;
@@ -190,58 +167,59 @@ class MasterMind extends Game {
                 String almost = oldAnwsers[oldAnwsers.length - 1];
                 String bannedAnswer[] = wrongAnswer.split(";");
                 test = "";
-                    for (int i = 0; i < nbCase; i++) {
-                        if (Character.toString(righPlacedColor.charAt(i)).equals("_")) {
-                            if (i == indexChar) {
+                for (int i = 0; i < nbCase; i++) {
+                    if (Character.toString(rightPlacedColor.charAt(i)).equals("_")) {
+                        if (i == indexChar) {
+                            nb = "";
+                            while (bannedAnswer[i].contains(nb)) {
                                 nb = "";
-                                while (bannedAnswer[i].contains(nb)) {
-                                    nb = "";
-                                    nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
-                                }
-                            } else {
-                                nb = "";
-                                nb += almost.charAt(i);
+                                nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
                             }
                         } else {
                             nb = "";
-                            nb += (righPlacedColor.charAt(i));
+                            nb += almost.charAt(i);
                         }
-                        test += nb;
-                        if (test.length() == nbCase && last.contains(test)) {
-                            StringBuilder newTest = new StringBuilder();
-                            boolean done = false;
-                            while (last.contains(test) && !done) {
+                    } else {
+                        nb = "";
+                        nb += (rightPlacedColor.charAt(i));
+                    }
+                    test += nb;
+                    if (test.length() == nbCase && last.contains(test)) {
+                        StringBuilder newTest = new StringBuilder();
+                        boolean done = false;
+                        while (last.contains(test) && !done) {
+                            //todo:fontion anti doublon
+                            newTest.append(test);
+                            while (newTest.toString().equals(test) && !done) {
+                                newTest.delete(0, newTest.length());
                                 newTest.append(test);
-                                while (newTest.toString().equals(test) && !done) {
-                                    newTest.delete(0, newTest.length());
-                                    newTest.append(test);
-                                    for (int h = 0; h < nbCase; h++) {
-                                        nb = "";
-                                        if (Character.toString(righPlacedColor.charAt(h)).equals("_")) {
+                                for (int h = 0; h < nbCase; h++) {
+                                    nb = "";
+                                    if (Character.toString(rightPlacedColor.charAt(h)).equals("_")) {
+                                        nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
+                                        while (bannedAnswer[h].contains(nb)) {
+                                            nb = "";
                                             nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
-                                            while (bannedAnswer[h].contains(nb)) {
-                                                nb = "";
-
-                                                nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
-                                            }
-                                            newTest.setCharAt(h, nb.charAt(0));
-
-                                            if (!last.contains(newTest.toString())) {
-                                                h = nbCase + 1;
-                                                done = true;
-                                            }
                                         }
-                                        if (!righPlacedColor.contains("_")) {
+                                        newTest.setCharAt(h, nb.charAt(0));
+
+                                        if (!last.contains(newTest.toString())) {
                                             h = nbCase + 1;
                                             done = true;
                                         }
                                     }
-                                    test = newTest.toString();
+                                    if (!rightPlacedColor.contains("_")) {
+                                        h = nbCase + 1;
+                                        done = true;
+                                    }
                                 }
+                                test = newTest.toString();
                             }
+                            //
                         }
                     }
-                    answer = test;
+                }
+                answer = test;
             }
         }
         return answer;
@@ -249,12 +227,12 @@ class MasterMind extends Game {
 
     private String combinationSelection(String color, boolean player) {
         StringBuilder selection = new StringBuilder();
-        String test = "";
+        StringBuilder test = new StringBuilder();
         int nb;
         for (int g = 0; g < color.length(); g++) {
             if (!player) {
                 nb = random.nextInt(color.length());
-                test += antiDuplicate(test, String.valueOf(nb), color.length());
+                test.append(nb);
             } else {
                 String print = printSelectedColors(color);
                 System.out.println("Veuillez selectionner une couleur dans " + print + " :10 sortie");
@@ -266,11 +244,7 @@ class MasterMind extends Game {
                         System.out.println("Veuillez selectionner une couleur  dans " + print);
                         nb = ConsoleUtils.intInput();
                     }
-                   /* while (nb != Integer.parseInt(antiDuplicateString(test, String.valueOf(nb))) || nb == 10) {
-                        System.out.println("Veuillez ne pas entrer la meme couleur");
-                        nb = ConsoleUtils.intInput();
-                    }*/
-                    test += nb;
+                    test.append(nb);
                 }
             }
             if (nb < color.length()) {
@@ -297,30 +271,30 @@ class MasterMind extends Game {
     }
 
     private int iA(String combination, String answer, int goodColor, int colorExist, int trials, String player) throws Exception {
-        ConfigReader Data = new ConfigReader();
+        ConfigReader data = new ConfigReader();
         if (combination.contentEquals(answer)) {
             System.out.println("Gagné la Reponse est " + answer + " C'est l" + player + " qui gagne");
-            trials = Data.getTrials();
+            trials = data.getTrials();
         } else {
-            System.out.println("Raté la Reponse du " + player + " est " + answer + " il reste " + (Data.getTrials() - trials - 1));
+            System.out.println("Raté la Reponse du " + player + " est " + answer + " il reste " + (data.getTrials() - trials - 1));
         }
         System.out.println("Il y a :" + goodColor + " bien placé et : " + colorExist + " couleur existantes");
         return trials;
     }
 
     private int playerTurn(String combination, int trials, boolean gamerMode) throws Exception {
-        ConfigReader Data = new ConfigReader();
+        ConfigReader data = new ConfigReader();
         System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + combination : "\033[36m   C'est votre tour");
-        String Answer = answerPlayer("MasterMind", Data.getColors());
-        int Indication[] = color(Answer, combination);
-        int GoodColor = Indication[0];
-        int ColorExist = Indication[1];
-        return iA(combination, Answer, GoodColor, ColorExist, trials, "e joueur");
+        String answer = answerPlayer("MasterMind", data.getColors());
+        int indication[] = color(answer, combination);
+        int goodColor = indication[0];
+        int colorExist = indication[1];
+        return iA(combination, answer, goodColor, colorExist, trials, "e joueur");
     }
 
     private int computerTurn(String combination, String selectedColor, int trials, boolean gamerMode) throws Exception {
-        int goodColor = 0;
-        int colorExist = 0;
+        int goodColor;
+        int colorExist;
         String answer;
         int length;
         length = combination.length();
@@ -328,17 +302,16 @@ class MasterMind extends Game {
         if (trials == 0) {
             answer = answerIA("MasterMind", length, trials, selectedColor, "0,0");
 
-            int Indication[] = color(answer, combination);
-            goodColor = Indication[0];
-            colorExist = Indication[1];
+            int indication[] = color(answer, combination);
+            goodColor = indication[0];
+            colorExist = indication[1];
             this.Clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
             trials = iA(combination, answer, goodColor, colorExist, trials, "ordinateur");
         } else {
-            System.out.println(this.Clue + " LINDICATION");
             answer = answerIA("MasterMind", length, trials, selectedColor, this.Clue);
-            int Indic[] = color(answer, combination);
-            goodColor = Indic[0];
-            colorExist = Indic[1];
+            int clue[] = color(answer, combination);
+            goodColor = clue[0];
+            colorExist = clue[1];
             this.Clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
             trials = iA(combination, answer, goodColor, colorExist, trials, "ordinateur");
         }
@@ -353,7 +326,7 @@ class MasterMind extends Game {
         String selectedColor;
         switch (mode) {
             case "challenger":
-                selectedColor = selectionIA("MasterMind", data.getColors());
+                selectedColor = selectionIA(data.getColors());
                 combination = combinationSelection(selectedColor, false);
                 while (trials < data.getTrials()) {
                     trials = playerTurn(combination, trials, data.isDeveloperMode());
@@ -372,7 +345,7 @@ class MasterMind extends Game {
 
                 String selectedColorPlayer = selectionPlayer("MasterMind");
                 String combinaisonPlayer = combinationSelection(selectedColorPlayer, true);
-                selectedColor = selectionIA("MasterMind", data.getColors());
+                selectedColor = selectionIA(data.getColors());
                 combination = combinationSelection(selectedColor, false);
 
                 while (data.getTrials() > trials) {

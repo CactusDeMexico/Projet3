@@ -5,17 +5,13 @@ import java.util.Random;
 
 abstract class Game {
     private ArrayList<String> AlreadyDone = new ArrayList<>();
-    private String BannedColors = "";
     private ArrayList<Integer> wellPlaced = new ArrayList<>();
     private ArrayList<Integer> existColor = new ArrayList<>();
     private int indexChar = -1;
     private String colorsFound = "";
     private ArrayList<String> rightPlaced = new ArrayList<>();
-    private String [] wrongPlaced;
+    private String[] wrongPlaced;
 
-    //todo: comment function
-    //todo: jar file
-    //todo: refactor
     String antiDuplicateChar2(String selection, String test, int performedTest) {
         Random random = new Random();
         String lastAnswers[] = selection.split(",");
@@ -31,7 +27,7 @@ abstract class Game {
         return test;
     }
 
-    String antiDuplicateString(String selection, String test) {
+    private String antiDuplicateString(String selection, String test) {
         Random random = new Random();
         if (selection.contains(test)) {
             while (selection.contains(test)) {
@@ -39,21 +35,11 @@ abstract class Game {
                 test += random.nextInt(10);
             }
         }
+
         return test;
     }
 
     //todo:supprimer fichier config et ragder lerreur envoyer puis catch cette erreur
-    private String antiDuplicateChar2(String selection, String test, String selectionedColor) {
-        Random random = new Random();
-        if (selection.contains(test)) {
-            System.out.println("ERREur " + "test" + test + " les couleur " + selectionedColor + "la selec" + selection);
-            while (selection.contains(test)) {
-                test = "";
-                test += selectionedColor.charAt(random.nextInt(selectionedColor.length()));
-            }
-        }
-        return test;
-    }
 
     private String antiDuplicateChar(String selection) {
         int count = 3;
@@ -86,21 +72,14 @@ abstract class Game {
         return selection;
     }
 
-    String selectionIA(String gameMode, int nbCase) {
+    String selectionIA( int nbCase) {
         String selection = "";
         Random random = new Random();
-        String nb;
 
         for (int i = 0; i < nbCase; i++) {
-            nb = "";
-            nb += random.nextInt(10);
-            if (gameMode.equalsIgnoreCase("MasterMind")) {
-                //nb = antiDuplicateString(selection, nb);
-            }
-            selection += nb;
+            selection += random.nextInt(10);
         }
 
-        //System.out.println(playerMode ? "La combinaison secrete est:" + selection : "Mode Joueur");
         return selection;
     }
 
@@ -124,18 +103,6 @@ abstract class Game {
         }
         return selection;
     }
-
- /*/  private int countRightAnswer(String answer) {
-        int count = 0;
-        String regex;
-        regex = "[0-9]+";
-        for (int i = 0; i < answer.length(); i++) {
-            if (Character.toString(answer.charAt(i)).matches(regex)) {
-                count++;
-            }
-        }
-        return count;
-    }*/
 
     private String lastAnswer() {
         StringBuilder previousData = new StringBuilder();
@@ -194,7 +161,7 @@ abstract class Game {
 
     private void wrongPlaceColors(String colors, int place) {
 
-        this.wrongPlaced[place]+=colors;
+        this.wrongPlaced[place] += colors;
     }
 
     String answerIA(String gameMode, int nbCase, int performedTest, String indication, String lastAnswer) throws Exception {
@@ -213,10 +180,10 @@ abstract class Game {
                     this.indexChar = 0;
                 }
                 if (performedTest == 0) {
-                    this.wrongPlaced=new String[nbCase];
+                    this.wrongPlaced = new String[nbCase];
                     for (int u = 0; u < nbCase; u++) {
                         this.rightPlaced.add("_");
-                        this.wrongPlaced[u]="_";
+                        this.wrongPlaced[u] = "_";
                     }
                 }
                 String[] format = lastAnswer.split(",");
@@ -228,7 +195,7 @@ abstract class Game {
                     lastGoodColor = this.goodColor();
                     String[] colorsPrecision = (jeux2.iAFoundedColors(colorExist, nbCase, last, lastColorExist)).split(",");
                     this.foundColorsF(colorsPrecision[0]);
-                    String[] wrongColors = jeux2.iAFindWrongPlacedColors(goodColor, performedTest, nbCase, last, lastGoodColor,lastColorExist,colorExist);
+                    String[] wrongColors = jeux2.iAFindWrongPlacedColors(goodColor, performedTest, nbCase, last, lastGoodColor, lastColorExist, colorExist);
                     int[] rightPlaced = jeux2.iAFindPlacedColors(goodColor, performedTest, nbCase, last, lastGoodColor);
                     int rigthPlaceIndex = rightPlaced[1];
                     String wrongPlaceIndex = wrongColors[1];
@@ -237,19 +204,19 @@ abstract class Game {
                     if (rigthPlaceIndex >= 0) {
                         this.rightPlaceColors(rightNumber, rigthPlaceIndex);
                     }
-                    if(!wrongNumber.equals("_")) {
-                        this.wrongPlaceColors(wrongNumber,Integer.parseInt(wrongPlaceIndex));
+                    if (!wrongNumber.equals("_")) {
+                        this.wrongPlaceColors(wrongNumber, Integer.parseInt(wrongPlaceIndex));
                     }
                 }
                 StringBuilder foundedC = new StringBuilder();
-                StringBuilder wrongAnswer= new StringBuilder();
+                StringBuilder wrongAnswer = new StringBuilder();
                 for (int u = 0; u < nbCase; u++) {
                     foundedC.append(this.rightPlaced.get(u));
                     wrongAnswer.append(this.wrongPlaced[u]).append(";");
                 }
-                answerToCheck = jeux2.masterMindAnswer(indication,  wrongAnswer.toString(), foundedC.toString(), performedTest, nbCase, last, this.indexChar);
+                answerToCheck = jeux2.masterMindAnswer(indication, wrongAnswer.toString(), foundedC.toString(), performedTest, nbCase, last, this.indexChar);
                 if (answerToCheck.length() != nbCase && performedTest == 0) {
-                    test.append( answerToCheck);
+                    test.append(answerToCheck);
                 } else {
                     test = new StringBuilder(answerToCheck);
                     i = nbCase;

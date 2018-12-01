@@ -2,18 +2,16 @@
         package com.openclassrooms.mpancarte;
 
 class Menu {
+    private String gameSelected = "";
 
-    private String GameSelected = "";
-
-
-    private void Launcher(String mode) throws Exception{
-        MasterMind jeuM = new MasterMind();
-        SecretNumber jeuS = new SecretNumber();
-        if (this.GameSelected.equalsIgnoreCase("MasterMind")) {
-            jeuM.boardGame(mode);
+    private void launcher(String mode) throws Exception{
+        MasterMind gameM = new MasterMind();
+        SecretNumber gameS = new SecretNumber();
+        if (this.gameSelected.equalsIgnoreCase("MasterMind")) {
+            gameM.boardGame(mode);
 
         } else {
-            jeuS.boardGame(mode);
+            gameS.boardGame(mode);
         }
     }
 
@@ -30,16 +28,16 @@ class Menu {
             case 1:
                 String gameMode = "challenger";
 
-                Launcher(gameMode);
+                launcher(gameMode);
                 break;
             case 2:
                 gameMode = "defenseur";
-                Launcher(gameMode);
+                launcher(gameMode);
                 break;
             case 3:
                 gameMode = "duel";
 
-                Launcher(gameMode);
+                launcher(gameMode);
                 break;
         }
     }
@@ -54,11 +52,11 @@ class Menu {
             System.out.println("\033[33m0________Quitter______________");
             choix = ConsoleUtils.intInput();
             if (choix == 1) {
-                this.GameSelected = "SecretNumber";
+                this.gameSelected = "SecretNumber";
             }
             if (choix == 2) {
 
-                this.GameSelected = "MasterMind";
+                this.gameSelected = "MasterMind";
             }
             if (choix < 3 && choix > 0) {
                 this.gameMode();
