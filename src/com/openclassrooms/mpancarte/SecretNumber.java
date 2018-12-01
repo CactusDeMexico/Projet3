@@ -1,7 +1,5 @@
 package com.openclassrooms.mpancarte;
-
 import java.util.Random;
-
 import static java.lang.Integer.valueOf;
 
 class SecretNumber extends Game {
