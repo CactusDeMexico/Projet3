@@ -1,21 +1,22 @@
 package com.openclassrooms.mpancarte;
+
 import java.util.Random;
+
 import static java.lang.Integer.valueOf;
 
 class SecretNumber extends Game {
 
-    private String LastAnswer;
-    private String Indication = "";
+    private String lastAnswer;
+    private String indication = "";
     private Random random = new Random();
-    private boolean PcTurn = false;
-    private boolean PlayerTurn = false;
-    private boolean ComputerTurn = random.nextBoolean();
+    private boolean pcTurn = false;
+    private boolean playerTurn = false;
+    private boolean computerTurn = random.nextBoolean();
 
     String secretNumberAnswer(String indication, int i, String test, int performedTest, String lastAnswer) throws Exception {
         ConfigReader data = new ConfigReader();
         String selection = "";
         Random random = new Random();
-
         int remainingTest = data.getTrials() - performedTest;
 
         if (remainingTest == data.getTrials()) {
@@ -28,17 +29,18 @@ class SecretNumber extends Game {
                     break;
                 case "-":
                     selection += random.nextInt(Character.getNumericValue(valueOf(test.charAt(i))));
-                    selection = antiDuplicateChar2(lastAnswer, selection,i);
+                    selection = antiDuplicateChar2(lastAnswer, selection, i);
                     break;
                 case "+":
                     selection += random.nextInt(10 - Character.getNumericValue(valueOf(test.charAt(i))));
-                    selection = antiDuplicateChar2(lastAnswer, selection,i);
+                    selection = antiDuplicateChar2(lastAnswer, selection, i);
                     break;
             }
         }
 
         return selection;
     }
+
     private String checkedAnswer(String nbSecret, int length, String answer) {
         StringBuilder clue = new StringBuilder();
 
@@ -77,9 +79,9 @@ class SecretNumber extends Game {
     private int computerTurn(String secretNumber, int trials, boolean gameMode) throws Exception {
         System.out.println(gameMode ? "\033[33m Le Nombre secret  du Joueur est: " + secretNumber : "\033[33m C'est le tour de l'ordinateur:");
         int length = secretNumber.length();
-        String answer = this.LastAnswer = this.answerIA("SecretNumber", length, trials, Indication, this.LastAnswer);
-        Indication = checkedAnswer(secretNumber, length, answer);
-        return iA(secretNumber, answer, Indication, trials, "'ordinateur");
+        String answer = this.lastAnswer = this.answerIA("SecretNumber", length, trials, indication, this.lastAnswer);
+        indication = checkedAnswer(secretNumber, length, answer);
+        return iA(secretNumber, answer, indication, trials, "'ordinateur");
     }
 
     void boardGame(String mode) throws Exception {
@@ -105,20 +107,20 @@ class SecretNumber extends Game {
                 String secretNumberPlayer = this.selectionPlayer("SecretNumber");
                 secretNumber = selectionIA("SecretNumber", data.getCases());
                 while (trials < data.getTrials()) {
-                    while (!(PcTurn && PlayerTurn) || trials < data.getTrials()) {
-                        if (ComputerTurn && trials < data.getTrials()) {
+                    while (!(pcTurn && playerTurn) || trials < data.getTrials()) {
+                        if (computerTurn && trials < data.getTrials()) {
                             trials = computerTurn(secretNumberPlayer, trials, data.isDeveloperMode());
-                            ComputerTurn = false;
-                            PcTurn = true;
+                            computerTurn = false;
+                            pcTurn = true;
                         }
-                        if (!ComputerTurn && trials < data.getTrials()) {
+                        if (!computerTurn && trials < data.getTrials()) {
                             trials = playerTurn(secretNumber, trials, data.isDeveloperMode());
-                            ComputerTurn = true;
-                            PlayerTurn = true;
+                            computerTurn = true;
+                            playerTurn = true;
                         }
                     }
                     trials++;
-                    PcTurn = PlayerTurn = false;
+                    pcTurn = playerTurn = false;
                 }
                 break;
         }
