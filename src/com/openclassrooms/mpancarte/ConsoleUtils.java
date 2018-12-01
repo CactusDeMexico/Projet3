@@ -8,7 +8,7 @@ public class ConsoleUtils {
     private static BufferedReader entree = new BufferedReader(new InputStreamReader(System.in));
 
     //lecture entier
-    public static int saisirInt() {
+    static int intInput() {
         while (true) {
             try {
                 //lecture de la chaine
@@ -23,9 +23,9 @@ public class ConsoleUtils {
     }
 
     //lecture
-    public static float saisirfloat() {
+    public static float floatInput() {
         float nb = 0;
-        String chaine = "";
+        String chaine;
         boolean ok = false;
         do {
             try {
@@ -37,13 +37,13 @@ public class ConsoleUtils {
             } catch (NumberFormatException exp) {
                 System.out.println("Erreur du format du nombre");
             }
-        } while (ok == false);
+        } while (!ok);
         return nb;
 
     }
 
     //lecture  chaine
-    public static String saisirString() {
+    public static String stringInput() {
 
         String chaine = "";
         try {
@@ -55,7 +55,7 @@ public class ConsoleUtils {
     }
 
     //lecture  un caract
-    public static char saisirChar() {
+    public static char charInput() {
 
         String chaine = "";
         try {
@@ -64,33 +64,26 @@ public class ConsoleUtils {
             System.out.println("Erreur de lecture clavier");
         }
         return chaine.charAt(0);
-    }/*
-    String number;
-System.out.println("Enter number:");
-    number = keyboard.nextLine();
-if (!number.matches("[0-9]+")) {
-        System.out.println("Invalid number");
-    }*/
-    public static String inputStringNumber() {
-
-        String string = "";
-        while (true) {
-        try {
-            String regex = "[0-9]+";
-            string = entree.readLine();//lecture de la chaine
-            int nb = Integer.parseInt(string);
-
-            if (!string.matches(regex)) {
-                System.out.println("Invalid number "+nb);
-            }
-            return string;
-        } catch (IOException exp) {
-            System.out.println("Erreur de lecture clavier");
-        }
-        catch (NumberFormatException exp){
-            System.out.println("Erreur de nombre");
-        }
-
     }
+
+    static String inputStringNumber() {
+
+        String selection ;
+        while (true) {
+            try {
+                String regex = "[0-9]+";
+                selection = entree.readLine();//lecture de la chaine
+                int nb = Integer.parseInt(selection);
+
+                if (!selection.matches(regex)) {
+                    System.out.println("Invalid number " + nb);
+                }
+                return selection;
+            } catch (IOException exp) {
+                System.out.println("Erreur de lecture clavier");
+            } catch (NumberFormatException exp) {
+                System.out.println("Erreur de nombre");
+            }
+        }
     }
 }
