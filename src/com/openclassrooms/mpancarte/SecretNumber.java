@@ -13,116 +13,108 @@ class SecretNumber extends Game {
     private boolean PlayerTurn = false;
     private boolean ComputerTurn = random.nextBoolean();
 
-    protected String secretNumberAnswer(String indication, int i, String test, int PerformedTest) throws Exception {
-        ConfigReader Data = new ConfigReader();
-        String Selection = "";
-        Random Random = new Random();
-        StringBuilder PreviousData = new StringBuilder();
-        int RemainingTest = Data.getTrials() - PerformedTest;
+    String secretNumberAnswer(String indication, int i, String test, int performedTest, String lastAnswer) throws Exception {
+        ConfigReader data = new ConfigReader();
+        String selection = "";
+        Random random = new Random();
 
-        if (RemainingTest == Data.getTrials()) {
-            Selection += valueOf(Random.nextInt(10));
+        int remainingTest = data.getTrials() - performedTest;
+
+        if (remainingTest == data.getTrials()) {
+            selection += valueOf(random.nextInt(10));
         } else {
-            for (int z = 0; z < this.OldAnswer.size(); z++) {
-                String Char = "";
-                Char += this.OldAnswer.get(z);
-                if (z < Data.getCases()) {
-                    PreviousData.append(Char.charAt(i));
-                }
-            }
 
             switch (Character.toString(indication.charAt(i))) {
                 case "=":
-                    Selection += Character.getNumericValue(valueOf(test.charAt(i)));
+                    selection += Character.getNumericValue(valueOf(test.charAt(i)));
                     break;
                 case "-":
-                    Selection += Random.nextInt(Character.getNumericValue(valueOf(test.charAt(i))));
-                    Selection = antiDuplicateString(PreviousData.toString(), Selection);
+                    selection += random.nextInt(Character.getNumericValue(valueOf(test.charAt(i))));
+                    selection = antiDuplicateChar2(lastAnswer, selection,i);
                     break;
                 case "+":
-                    Selection += Random.nextInt(10 - Character.getNumericValue(valueOf(test.charAt(i))));
-                    Selection = antiDuplicateString(PreviousData.toString(), Selection);
+                    selection += random.nextInt(10 - Character.getNumericValue(valueOf(test.charAt(i))));
+                    selection = antiDuplicateChar2(lastAnswer, selection,i);
                     break;
             }
         }
 
-        return Selection;
+        return selection;
     }
-    private String checkAnswer(String NbSecret, int length, String Answer) {
-        StringBuilder indice = new StringBuilder();
+    private String checkedAnswer(String nbSecret, int length, String answer) {
+        StringBuilder clue = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
-            if (valueOf(NbSecret.charAt(i)).equals(valueOf(Answer.charAt(i)))) {
-                indice.append("=");
-            } else if (valueOf(NbSecret.charAt(i)) < valueOf(Answer.charAt(i))) {
-                indice.append("-");
+            if (valueOf(nbSecret.charAt(i)).equals(valueOf(answer.charAt(i)))) {
+                clue.append("=");
+            } else if (valueOf(nbSecret.charAt(i)) < valueOf(answer.charAt(i))) {
+                clue.append("-");
             } else {
-                indice.append("+");
+                clue.append("+");
             }
         }
-        return indice.toString();
+        return clue.toString();
     }
 
-    private int iA(String NbSecret, String Answer, String indication, int Try, String Player) throws Exception {
-        ConfigReader Data = new ConfigReader();
-        if (NbSecret.contentEquals(Answer)) {
-            System.out.println("Gagné la Reponse est " + Answer + "C'est l" + Player + "qui gagne");
-            Try = Data.getTrials();
+    private int iA(String nbSecret, String answer, String indication, int trials, String player) throws Exception {
+        ConfigReader data = new ConfigReader();
+        if (nbSecret.contentEquals(answer)) {
+            System.out.println("Gagné la Reponse est " + answer + "C'est l" + player + "qui gagne");
+            trials = data.getTrials();
         } else {
-            System.out.println("Raté la Reponse du " + Player + "est " + Answer + " il reste " + (Data.getTrials() - Try - 1));
+            System.out.println("Raté la Reponse du " + player + "est " + answer + " il reste " + (data.getTrials() - trials - 1));
         }
         System.out.println("indication" + indication);
-        return Try;
+        return trials;
     }
 
-    private int playerTurn(String SecretNumber, int Try, boolean GamerMode) throws Exception {
-        ConfigReader Data = new ConfigReader();
-        System.out.println(GamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + SecretNumber : "\033[36m C'est votre tour");
-        String Answer = this.answerPlayer("SecretNumber", Data.getCases());
-
-        String Indication = checkAnswer(SecretNumber, Data.getCases(), Answer);
-        return iA(SecretNumber, Answer, Indication, Try, "e Joueur");
+    private int playerTurn(String secretNumber, int trials, boolean gamerMode) throws Exception {
+        ConfigReader data = new ConfigReader();
+        System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + secretNumber : "\033[36m C'est votre tour");
+        String answer = this.answerPlayer("SecretNumber", data.getCases());
+        String indication = checkedAnswer(secretNumber, data.getCases(), answer);
+        return iA(secretNumber, answer, indication, trials, "e Joueur");
     }
 
-    private int computerTurn(String SecretNumber, int Try, boolean GameMode) throws Exception {
-        System.out.println(GameMode ? "\033[33m Le Nombre secret  du Joueur est: " + SecretNumber : "\033[33m C'est le tour de l'ordinateur:");
-        int length = SecretNumber.length();
-        String Answer = this.LastAnswer = this.answerIA("SecretNumber", length, Try, Indication, this.LastAnswer);
-        Indication = checkAnswer(SecretNumber, length, Answer);
-        return iA(SecretNumber, Answer, Indication, Try, "'ordinateur");
+    private int computerTurn(String secretNumber, int trials, boolean gameMode) throws Exception {
+        System.out.println(gameMode ? "\033[33m Le Nombre secret  du Joueur est: " + secretNumber : "\033[33m C'est le tour de l'ordinateur:");
+        int length = secretNumber.length();
+        String answer = this.LastAnswer = this.answerIA("SecretNumber", length, trials, Indication, this.LastAnswer);
+        Indication = checkedAnswer(secretNumber, length, answer);
+        return iA(secretNumber, answer, Indication, trials, "'ordinateur");
     }
 
-    void boardGame(String Mode) throws Exception {
-        ConfigReader Data = new ConfigReader();
-        String SecretNumber;
+    void boardGame(String mode) throws Exception {
+        ConfigReader data = new ConfigReader();
+        String secretNumber;
         int trials = 0;
-        switch (Mode) {
+        switch (mode) {
             case "challenger":
-                SecretNumber = selectionIA("SecretNumber", Data.getCases(), Data.isDeveloperMode());
-                while (trials < Data.getTrials()) {
-                    trials = playerTurn(SecretNumber, trials, Data.isDeveloperMode());
+                secretNumber = selectionIA("SecretNumber", data.getCases());
+                while (trials < data.getTrials()) {
+                    trials = playerTurn(secretNumber, trials, data.isDeveloperMode());
                     trials++;
                 }
                 break;
             case "defenseur":
-                SecretNumber = this.selectionPlayer("SecretNumber", Data.isDeveloperMode());
-                while (trials < Data.getTrials()) {
-                    trials = computerTurn(SecretNumber, trials, Data.isDeveloperMode());
+                secretNumber = this.selectionPlayer("SecretNumber");
+                while (trials < data.getTrials()) {
+                    trials = computerTurn(secretNumber, trials, data.isDeveloperMode());
                     trials++;
                 }
                 break;
             case "duel":
-                String SecretNumberPlayer = this.selectionPlayer("SecretNumber", Data.isDeveloperMode());
-                SecretNumber = selectionIA("SecretNumber", Data.getCases(), Data.isDeveloperMode());
-                while (trials < Data.getTrials()) {
-                    while (!(PcTurn && PlayerTurn) || trials < Data.getTrials()) {
-                        if (ComputerTurn && trials < Data.getTrials()) {
-                            trials = computerTurn(SecretNumberPlayer, trials, Data.isDeveloperMode());
+                String secretNumberPlayer = this.selectionPlayer("SecretNumber");
+                secretNumber = selectionIA("SecretNumber", data.getCases());
+                while (trials < data.getTrials()) {
+                    while (!(PcTurn && PlayerTurn) || trials < data.getTrials()) {
+                        if (ComputerTurn && trials < data.getTrials()) {
+                            trials = computerTurn(secretNumberPlayer, trials, data.isDeveloperMode());
                             ComputerTurn = false;
                             PcTurn = true;
                         }
-                        if (!ComputerTurn && trials < Data.getTrials()) {
-                            trials = playerTurn(SecretNumber, trials, Data.isDeveloperMode());
+                        if (!ComputerTurn && trials < data.getTrials()) {
+                            trials = playerTurn(secretNumber, trials, data.isDeveloperMode());
                             ComputerTurn = true;
                             PlayerTurn = true;
                         }
