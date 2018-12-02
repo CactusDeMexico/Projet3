@@ -5,22 +5,21 @@ import org.apache.logging.log4j.Logger;
 
 public class Log {
 
-    public static Logger logger = LogManager.getLogger(Log.class);
+    //public static Logger logger = LogManager.getLogger(Log.class);
+    private static final Logger logger = LogManager.getLogger(Log.class);
 
 
+    public void runMe() {
 
-    public void runMe(String parameter) {
+        logger.debug("msg de debogage");
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("This is debug : " + parameter);
-        }
+        logger.info("msg d'information");
 
-        if (logger.isInfoEnabled()) {
-            logger.info("This is info : " + parameter);
-        }
+        logger.error("msg d'erreur");
 
-        logger.warn("This is warn : " + parameter);
-        logger.error("This is error : " + parameter);
-        logger.fatal("This is fatal : " + parameter);
+        logger.fatal("msg d'erreur fatale");
     }
+
+
+
 }
