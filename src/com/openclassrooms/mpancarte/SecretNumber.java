@@ -74,17 +74,18 @@ class SecretNumber extends Game {
         System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + secretNumber : "\033[36m C'est votre tour");
         String answer = this.answerPlayer(data.getCases());
         String indication = checkedAnswer(secretNumber, data.getCases(), answer);
-        log.result(answer,secretNumber,trials,"Joueur");
+        log.result(answer,secretNumber,data.getTrials()-trials,"Joueur");
         return verification(secretNumber, answer, indication, trials, "e Joueur");
     }
 
     private int computerTurn(String secretNumber, int trials, boolean gameMode) throws Exception {
         Log log= new Log();
+        ConfigReader data = new ConfigReader();
         System.out.println(gameMode ? "\033[33m Le Nombre secret  du Joueur est: " + secretNumber : "\033[33m C'est le tour de l'ordinateur:");
         int length = secretNumber.length();
         String answer = this.lastAnswer = this.answerIA("SecretNumber", length, trials, indication, this.lastAnswer);
         indication = checkedAnswer(secretNumber, length, answer);
-        log.result(answer,secretNumber,trials,"Ordinateur");
+        log.result(answer,secretNumber,data.getTrials()-trials,"Ordinateur");
         return verification(secretNumber, answer, indication, trials, "'ordinateur");
     }
 
@@ -96,7 +97,7 @@ class SecretNumber extends Game {
         switch (mode) {
             case "challenger":
                 secretNumber = selectionIA( data.getCases(),"SecretNumber");
-                log.setInfo(data.isDeveloperMode(),"SecretNumber",secretNumber,"Joueur",mode);
+                log.setInfo(data.isDeveloperMode(),"SecretNumber",secretNumber,"Ordinateur",mode);
                 while (trials < data.getTrials()) {
                     trials = playerTurn(secretNumber, trials, data.isDeveloperMode());
                     trials++;
@@ -114,6 +115,8 @@ class SecretNumber extends Game {
             case "duel":
                 String secretNumberPlayer = this.selectionPlayer("SecretNumber");
                 secretNumber = selectionIA( data.getCases(),"SecretNumber");
+                log.setInfo(data.isDeveloperMode(),"SecretNumber",secretNumberPlayer,"Joueur",mode);
+                log.setInfo(data.isDeveloperMode(),"SecretNumber",secretNumber,"Ordinateur",mode);
                 while (trials < data.getTrials()) {
                     while (!(pcTurn && playerTurn) || trials < data.getTrials()) {
                         if (computerTurn && trials < data.getTrials()) {

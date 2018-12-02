@@ -50,14 +50,14 @@ class Log {
         logger.info("  Jeux selectionné :" + selectedGame);
         logger.info(" Mode de Jeux selectionné :" + mode);
 
-        logger.info(" c'est le "+player);
+        logger.info(" c'est le "+player+" qui choisi");
         logger.info("Combinaisaon à trouver :" + combinaison);
     }
     protected void result(String answer,String secretNumber,int trials,String player){
         if (secretNumber.equals(answer)) {
-            logger.info("  reponse c proposé  " + answer + " et il gagne ");
+            logger.info(player+" propose  " + answer + " et il gagne ");
         } else {
-            logger.info(" reponse  proposé" + answer + " et il perd il reste  "+trials+" essais");
+            logger.info(player+" reponse  proposé" + answer + " et il perd il reste  "+trials+" essais");
         }
 
     }
