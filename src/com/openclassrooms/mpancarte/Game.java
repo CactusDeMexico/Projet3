@@ -25,15 +25,31 @@ abstract class Game {
         return test;
     }
 
-
-    //set and return combinaison pc
-    String selectionIA(int nbCase) {
-        StringBuilder selection = new StringBuilder();
+    String antiDuplicateString(String selection, String test) {
         Random random = new Random();
+        if (selection.contains(test)) {
+            while (selection.contains(test)) {
+                test = "";
+                test += random.nextInt(10);
+            }
+        }
+        return test;
+    }
+    //set and return combinaison pc
+    String selectionIA(int nbCase,String gameMode) {
+        String selection = "";
+        Random random = new Random();
+        String nb;
 
         for (int i = 0; i < nbCase; i++) {
-            selection.append(random.nextInt(10));
+            nb = "";
+            nb += random.nextInt(10);
+            if (gameMode.equalsIgnoreCase("MasterMind")) {
+                nb = antiDuplicateString(selection, nb);
+            }
+            selection += nb;
         }
+
         return selection.toString();
     }
 

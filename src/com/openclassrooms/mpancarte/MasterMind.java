@@ -6,10 +6,10 @@ class MasterMind extends Game {
 
     private String color[] = {"Bleu", "Rouge", "Vert", "Jaune", "Orange", "Marron", "Blanc", "Violet", "Cyan", "Noir"};
     private Random random = new Random();
-    private boolean PcTurn = false;
-    private boolean PlayerTurn = false;
-    private boolean ComputerTurn = random.nextBoolean();
-    private String Clue;
+    private boolean pcTurn = false;
+    private boolean playerTurn = false;
+    private boolean computerTurn = random.nextBoolean();
+    private String clue;
 
     void printColors() {
         System.out.println("0:" + this.color[0] + " 1: " + this.color[1] + " 2: " + this.color[2] + " 3: " + this.color[3] + " 4: " + this.color[4] + " 5: " + this.color[5] + " 6: " + this.color[6] + " 7: " + this.color[7] + " 8: " + this.color[8] + " 9: " + this.color[9] + " 10:FIN");
@@ -18,23 +18,20 @@ class MasterMind extends Game {
     private String printSelectedColors(String selection) {
         int h = 0;
         StringBuilder selectionBuilder = new StringBuilder(selection);
+        selectionBuilder.append(" ");
         while (h < selection.length()) {
-            selectionBuilder.append(h).append(": ").append(this.color[Character.getNumericValue(selectionBuilder.charAt(h))]).append(" ");
+            selectionBuilder.append(h).append(": ").append(this.color[Integer.parseInt(Character.toString(selectionBuilder.charAt(h)))]).append(" ");
             h++;
         }
-        selection = selectionBuilder.toString();
-        return selection;
+
+        return selectionBuilder.toString();
     }
-
-
 
     int[] iAFindPlacedColors(int goodColor, int nbCase, String last, int oldGoodColor) {
         int number = -1;
         int index = -1;
         String bestAnswer;
         String lastAnswers[] = last.split(",");
-        System.out.println("____Good color :" + goodColor + " old good color " + oldGoodColor);
-        //verifier match
         int count = 0;
         int charSelected = 0;
 
@@ -61,7 +58,7 @@ class MasterMind extends Game {
         return new int[]{number, index};
     }
 
-    String[] iAFindWrongPlacedColors(int goodColor,  int nbCase, String last, int oldGoodColor, int oldExistColor, int existColor) {
+    String[] iAFindWrongPlacedColors(int goodColor, int nbCase, String last, int oldGoodColor, int oldExistColor, int existColor) {
         String number = "_";
         String index = "_";
         String bestAnswer;
@@ -98,16 +95,16 @@ class MasterMind extends Game {
         }
         return new String[]{number, index};
     }
-    private String anttiDuplicate(String test,String lastAnswer,String rightPlacedColor,String selectedColor,String []banned){
+
+    private String antiDuplicate(String test, String lastAnswer, String rightPlacedColor, String selectedColor, String[] banned) {
         StringBuilder newTest = new StringBuilder();
         boolean done = false;
         while (lastAnswer.contains(test) && !done) {
-            //todo:fontion anti doublon
             newTest.append(test);
             while (newTest.toString().equals(test) && !done) {
                 newTest.delete(0, newTest.length());
                 newTest.append(test);
-               String nb;
+                String nb;
                 for (int h = 0; h < test.length(); h++) {
                     nb = "";
                     if (Character.toString(rightPlacedColor.charAt(h)).equals("_")) {
@@ -131,9 +128,9 @@ class MasterMind extends Game {
                 test = newTest.toString();
             }
         }
-            //
-return test;
-}
+        //
+        return test;
+    }
 
     String masterMindAnswer(String selectedColor, String wrongAnswer, String rightPlacedColor, int performedTest, int nbCase, String last, int indexChar) {
 
@@ -170,12 +167,12 @@ return test;
                     }
                     test += nb;
                     if (test.length() == nbCase && last.contains(test)) {
-                        test=anttiDuplicate(test,last,rightPlacedColor,selectedColor,bannedAnswer);
-                        }
+                        test = antiDuplicate(test, last, rightPlacedColor, selectedColor, bannedAnswer);
                     }
                 }
-            answer = test;
             }
+            answer = test;
+        }
 
         return answer;
     }
@@ -225,52 +222,54 @@ return test;
         return new int[]{goodColor, colorExist};
     }
 
-
-
-    private int checkAnswer(String combination, String answer, int goodColor, int colorExist, int trials, String player) throws Exception {
+    private int verification(String combination, String answer, int goodColor, int colorExist, int trials, String player) throws Exception {
         ConfigReader data = new ConfigReader();
+        String printColors = printSelectedColors(answer);
         if (combination.contentEquals(answer)) {
-            System.out.println("Gagné la Reponse est " + answer + " C'est l" + player + " qui gagne");
+            System.out.println("Gagné la Reponse est " + printColors + " C'est l" + player + " qui gagne");
             trials = data.getTrials();
         } else {
-            System.out.println("Raté la Reponse du " + player + " est " + answer + " il reste " + (data.getTrials() - trials - 1));
+            System.out.println("Raté la Reponse du " + player + " est " + printColors + " il reste " + (data.getTrials() - trials - 1));
         }
         System.out.println("Il y a :" + goodColor + " bien placé et : " + colorExist + " couleur existantes");
         return trials;
     }
 
-    private int playerTurn(String combination, int trials, boolean gamerMode) throws Exception {
+    private int playerTurn(String combination, int trials, boolean gamerMode, String selection) throws Exception {
         ConfigReader data = new ConfigReader();
-        System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + combination : "\033[36m   C'est votre tour");
+        String possibleColor = printSelectedColors(selection);
+        String printColors = printSelectedColors(combination);
+        System.out.println(gamerMode ? "\033[36m La combinaison   de l'ordinateur est: " + printColors : "\033[36m   C'est votre tour");
+        System.out.println("voici les couleurs disponible " + possibleColor);
         String answer = answerPlayer(data.getColors());
         int indication[] = color(answer, combination);
         int goodColor = indication[0];
         int colorExist = indication[1];
-        return checkAnswer(combination, answer, goodColor, colorExist, trials, "e joueur");
+        return verification(combination, answer, goodColor, colorExist, trials, "e joueur");
     }
 
     private int computerTurn(String combination, String selectedColor, int trials, boolean gamerMode) throws Exception {
         int goodColor;
         int colorExist;
         String answer;
-        int length;
-        length = combination.length();
-        System.out.println(gamerMode ? "\033[33m La combinaison  du Joueur est: " + combination : "\033[33m C'est le tour de l'ordinateur:");
+        String printColors = printSelectedColors(combination);
+        int length = combination.length();
+        System.out.println(gamerMode ? "\033[33m La combinaison  du Joueur est: " + printColors : "\033[33m C'est le tour de l'ordinateur:");
         if (trials == 0) {
             answer = answerIA("MasterMind", length, trials, selectedColor, "0,0");
 
             int indication[] = color(answer, combination);
             goodColor = indication[0];
             colorExist = indication[1];
-            this.Clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
-            trials = checkAnswer(combination, answer, goodColor, colorExist, trials, "ordinateur");
+            this.clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
+            trials = verification(combination, answer, goodColor, colorExist, trials, "ordinateur");
         } else {
-            answer = answerIA("MasterMind", length, trials, selectedColor, this.Clue);
+            answer = answerIA("MasterMind", length, trials, selectedColor, this.clue);
             int clue[] = color(answer, combination);
             goodColor = clue[0];
             colorExist = clue[1];
-            this.Clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
-            trials = checkAnswer(combination, answer, goodColor, colorExist, trials, "ordinateur");
+            this.clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
+            trials = verification(combination, answer, goodColor, colorExist, trials, "ordinateur");
         }
 
         return trials;
@@ -283,10 +282,10 @@ return test;
         String selectedColor;
         switch (mode) {
             case "challenger":
-                selectedColor = selectionIA(data.getColors());
+                selectedColor = selectionIA(data.getColors(), "MasterMind");
                 combination = combinationSelection(selectedColor, false);
                 while (trials < data.getTrials()) {
-                    trials = playerTurn(combination, trials, data.isDeveloperMode());
+                    trials = playerTurn(combination, trials, data.isDeveloperMode(), selectedColor);
                     trials++;
                 }
                 break;
@@ -302,24 +301,24 @@ return test;
 
                 String selectedColorPlayer = selectionPlayer("MasterMind");
                 String combinationSelection = combinationSelection(selectedColorPlayer, true);
-                selectedColor = selectionIA(data.getColors());
+                selectedColor = selectionIA(data.getColors(), "MasterMind");
                 combination = combinationSelection(selectedColor, false);
 
                 while (data.getTrials() > trials) {
-                    while (!(PcTurn && PlayerTurn) || trials < data.getTrials()) {
-                        if (ComputerTurn && trials < data.getTrials()) {
+                    while (!(pcTurn && playerTurn) || trials < data.getTrials()) {
+                        if (computerTurn && trials < data.getTrials()) {
                             trials = computerTurn(combinationSelection, selectedColorPlayer, trials, data.isDeveloperMode());
-                            ComputerTurn = false;
-                            PcTurn = true;
+                            computerTurn = false;
+                            pcTurn = true;
                         }
-                        if (!ComputerTurn && trials < data.getTrials()) {
-                            trials = playerTurn(combination, trials, data.isDeveloperMode());
-                            ComputerTurn = true;
-                            PlayerTurn = true;
+                        if (!computerTurn && trials < data.getTrials()) {
+                            trials = playerTurn(combination, trials, data.isDeveloperMode(), selectedColor);
+                            computerTurn = true;
+                            playerTurn = true;
                         }
                     }
                     trials++;
-                    PcTurn = PlayerTurn = false;
+                    pcTurn = playerTurn = false;
                 }
                 break;
         }

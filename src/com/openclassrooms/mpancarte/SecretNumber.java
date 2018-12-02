@@ -56,7 +56,7 @@ class SecretNumber extends Game {
         return clue.toString();
     }
 
-    private int iA(String nbSecret, String answer, String indication, int trials, String player) throws Exception {
+    private int verification(String nbSecret, String answer, String indication, int trials, String player) throws Exception {
         ConfigReader data = new ConfigReader();
         if (nbSecret.contentEquals(answer)) {
             System.out.println("Gagné la Reponse est " + answer + "C'est l" + player + "qui gagne");
@@ -73,7 +73,7 @@ class SecretNumber extends Game {
         System.out.println(gamerMode ? "\033[36m Le Nombre secret  de l'ordinateur est: " + secretNumber : "\033[36m C'est votre tour");
         String answer = this.answerPlayer(data.getCases());
         String indication = checkedAnswer(secretNumber, data.getCases(), answer);
-        return iA(secretNumber, answer, indication, trials, "e Joueur");
+        return verification(secretNumber, answer, indication, trials, "e Joueur");
     }
 
     private int computerTurn(String secretNumber, int trials, boolean gameMode) throws Exception {
@@ -81,7 +81,7 @@ class SecretNumber extends Game {
         int length = secretNumber.length();
         String answer = this.lastAnswer = this.answerIA("SecretNumber", length, trials, indication, this.lastAnswer);
         indication = checkedAnswer(secretNumber, length, answer);
-        return iA(secretNumber, answer, indication, trials, "'ordinateur");
+        return verification(secretNumber, answer, indication, trials, "'ordinateur");
     }
 
     void boardGame(String mode) throws Exception {
@@ -90,7 +90,7 @@ class SecretNumber extends Game {
         int trials = 0;
         switch (mode) {
             case "challenger":
-                secretNumber = selectionIA( data.getCases());
+                secretNumber = selectionIA( data.getCases(),"SecretNumber");
                 while (trials < data.getTrials()) {
                     trials = playerTurn(secretNumber, trials, data.isDeveloperMode());
                     trials++;
@@ -105,7 +105,7 @@ class SecretNumber extends Game {
                 break;
             case "duel":
                 String secretNumberPlayer = this.selectionPlayer("SecretNumber");
-                secretNumber = selectionIA( data.getCases());
+                secretNumber = selectionIA( data.getCases(),"SecretNumber");
                 while (trials < data.getTrials()) {
                     while (!(pcTurn && playerTurn) || trials < data.getTrials()) {
                         if (computerTurn && trials < data.getTrials()) {
