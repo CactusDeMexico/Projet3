@@ -26,54 +26,7 @@ class MasterMind extends Game {
         return selection;
     }
 
-    String iAFoundedColors(int colorExist, int nbCase, String last, int existColors) {
-        String lastAnswers[] = last.split(",");
-        String answer;
-        StringBuilder selection = new StringBuilder();
-        String bestAnswer;
-        int count = 0;
-        int charSelected = 0;
-        String banned = "_";
-        for (int i = 0; i < nbCase; i++) {
-            if (!(Character.toString(lastAnswers[lastAnswers.length - 2].charAt(i)).equals(Character.toString(lastAnswers[lastAnswers.length - 1].charAt(i))))) {
-                count++;
-                charSelected = i;
-            }
-        }
-        System.out.println(" la couleur exisantte actu :" + colorExist + " et l'ancienne :" + this.existColor());
-        if (colorExist > existColors) {
-            bestAnswer = lastAnswers[lastAnswers.length - 1];
-            answer = lastAnswers[lastAnswers.length - 2];
-            if (count == 1) {
-                selection.append(Character.toString(bestAnswer.charAt(charSelected)));
-                banned = Character.toString(answer.charAt(charSelected));
-            }
-        } else if (colorExist < existColors) {
-            answer = lastAnswers[lastAnswers.length - 1];
-            bestAnswer = lastAnswers[lastAnswers.length - 2];
-            if (count == 1) {
-                selection.append(Character.toString(bestAnswer.charAt(charSelected)));
-                banned = Character.toString(answer.charAt(charSelected));
-            }
-        } else if (colorExist == nbCase - 1) {
-            answer = lastAnswers[lastAnswers.length - 1];
-            bestAnswer = lastAnswers[lastAnswers.length - 2];
-            for (int i = 0; i < nbCase; i++) {
-                if ((bestAnswer.charAt(i)) == answer.charAt(i)) {
-                    selection.append(Character.toString(bestAnswer.charAt(i)));
-                    banned = Character.toString(answer.charAt(charSelected));
-                }
-            }
-        } else {
-            answer = lastAnswers[lastAnswers.length - 1];
-            bestAnswer = lastAnswers[lastAnswers.length - 2];
-            if (count == 1) {
 
-                banned = Character.toString(answer.charAt(charSelected)) + Character.toString(bestAnswer.charAt(charSelected));
-            }
-        }
-        return selection.toString() + "," + banned;
-    }
 
     int[] iAFindPlacedColors(int goodColor, int nbCase, String last, int oldGoodColor) {
         int number = -1;
