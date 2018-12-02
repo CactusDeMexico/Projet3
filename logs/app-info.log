@@ -1,0 +1,160 @@
+[INFO ] 2018-12-02 10:51:06.274 [main] Log - Mode dev
+[INFO ] 2018-12-02 10:51:06.276 [main] Log -  Mode de Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 10:51:06.276 [main] Log - Secret number
+[INFO ] 2018-12-02 10:51:06.276 [main] Log -  c'est le joueur qui joue
+[INFO ] 2018-12-02 10:51:06.276 [main] Log - Combinaisaon à trouver :3056
+[INFO ] 2018-12-02 10:51:09.113 [main] Log -  reponse  proposé2365 et il perd 
+[INFO ] 2018-12-02 10:51:19.657 [main] Log -   reponse  proposé  3056 et il gagne
+[INFO ] 2018-12-02 10:54:31.243 [main] Log - Mode dev
+[INFO ] 2018-12-02 10:54:31.244 [main] Log -  Mode de Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 10:54:31.244 [main] Log -  c'est le Joueur
+[INFO ] 2018-12-02 10:54:31.244 [main] Log - Combinaisaon à trouver :3265
+[INFO ] 2018-12-02 10:54:31.253 [main] Log -  reponse  proposé5137 et il perd il reste  0 essais
+[INFO ] 2018-12-02 10:54:31.254 [main] Log -  reponse  proposé2501 et il perd il reste  1 essais
+[INFO ] 2018-12-02 10:54:31.260 [main] Log -  reponse  proposé3093 et il perd il reste  2 essais
+[INFO ] 2018-12-02 10:54:31.261 [main] Log -  reponse  proposé3615 et il perd il reste  3 essais
+[INFO ] 2018-12-02 10:54:31.263 [main] Log -  reponse  proposé3355 et il perd il reste  4 essais
+[INFO ] 2018-12-02 10:54:31.264 [main] Log -  reponse  proposé3925 et il perd il reste  5 essais
+[INFO ] 2018-12-02 10:54:31.266 [main] Log -  reponse  proposé3285 et il perd il reste  6 essais
+[INFO ] 2018-12-02 10:54:31.267 [main] Log -  reponse  proposé3205 et il perd il reste  7 essais
+[INFO ] 2018-12-02 10:54:31.268 [main] Log -  reponse  proposé3215 et il perd il reste  8 essais
+[INFO ] 2018-12-02 10:54:31.270 [main] Log -  reponse  proposé3275 et il perd il reste  9 essais
+[INFO ] 2018-12-02 10:54:44.193 [main] Log - Mode dev
+[INFO ] 2018-12-02 10:54:44.193 [main] Log -  Mode de Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 10:54:44.193 [main] Log -  c'est le Joueur
+[INFO ] 2018-12-02 10:54:44.193 [main] Log - Combinaisaon à trouver :6839
+[INFO ] 2018-12-02 10:54:46.248 [main] Log -  reponse  proposé3254 et il perd il reste  0 essais
+[INFO ] 2018-12-02 10:54:51.168 [main] Log -  reponse  proposé2351 et il perd il reste  1 essais
+[INFO ] 2018-12-02 10:54:55.384 [main] Log -   reponse c proposé  6839 et il gagne 
+[INFO ] 2018-12-02 10:57:42.920 [main] Log - Mode dev
+[INFO ] 2018-12-02 10:57:42.920 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 10:57:42.920 [main] Log -  Mode de Jeux selectionné :challenger
+[INFO ] 2018-12-02 10:57:42.920 [main] Log -  c'est le Joueur
+[INFO ] 2018-12-02 10:57:42.920 [main] Log - Combinaisaon à trouver :5025
+[INFO ] 2018-12-02 10:57:46.896 [main] Log -  reponse  proposé2351 et il perd il reste  0 essais
+[INFO ] 2018-12-02 10:57:50.440 [main] Log -  reponse  proposé2135 et il perd il reste  1 essais
+[INFO ] 2018-12-02 10:57:53.928 [main] Log -  reponse  proposé2548 et il perd il reste  2 essais
+[INFO ] 2018-12-02 10:57:56.687 [main] Log -   reponse c proposé  5025 et il gagne 
+[INFO ] 2018-12-02 10:58:01.871 [main] Log - Mode dev
+[INFO ] 2018-12-02 10:58:01.872 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 10:58:01.872 [main] Log -  Mode de Jeux selectionné :defenseur
+[INFO ] 2018-12-02 10:58:01.872 [main] Log -  c'est le Joueur
+[INFO ] 2018-12-02 10:58:01.872 [main] Log - Combinaisaon à trouver :3265
+[INFO ] 2018-12-02 10:58:01.873 [main] Log -  reponse  proposé2885 et il perd il reste  0 essais
+[INFO ] 2018-12-02 10:58:01.875 [main] Log -  reponse  proposé5565 et il perd il reste  1 essais
+[INFO ] 2018-12-02 10:58:01.880 [main] Log -  reponse  proposé1465 et il perd il reste  2 essais
+[INFO ] 2018-12-02 10:58:01.882 [main] Log -  reponse  proposé0065 et il perd il reste  3 essais
+[INFO ] 2018-12-02 10:58:01.884 [main] Log -  reponse  proposé9165 et il perd il reste  4 essais
+[INFO ] 2018-12-02 10:58:01.885 [main] Log -  reponse  proposé4665 et il perd il reste  5 essais
+[INFO ] 2018-12-02 10:58:01.887 [main] Log -   reponse c proposé  3265 et il gagne 
+[INFO ] 2018-12-02 11:04:57.828 [main] Log - Mode dev
+[INFO ] 2018-12-02 11:04:57.829 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 11:04:57.829 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 11:04:57.829 [main] Log -  c'est le Joueur qui choisi
+[INFO ] 2018-12-02 11:04:57.829 [main] Log - Combinaisaon à trouver :2365
+[INFO ] 2018-12-02 11:04:57.829 [main] Log - Mode dev
+[INFO ] 2018-12-02 11:04:57.829 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 11:04:57.829 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 11:04:57.829 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 11:04:57.829 [main] Log - Combinaisaon à trouver :3841
+[INFO ] 2018-12-02 11:04:57.831 [main] Log -  reponse  proposé2408 et il perd il reste  10 essais
+[INFO ] 2018-12-02 11:05:03.310 [main] Log -  reponse  proposé2315 et il perd il reste  10 essais
+[INFO ] 2018-12-02 11:05:03.312 [main] Log -  reponse  proposé6663 et il perd il reste  10 essais
+[INFO ] 2018-12-02 11:05:06.182 [main] Log -  reponse  proposé2368 et il perd il reste  10 essais
+[INFO ] 2018-12-02 11:05:06.184 [main] Log -  reponse  proposé5451 et il perd il reste  10 essais
+[INFO ] 2018-12-02 11:05:24.454 [main] Log -   reponse c proposé  3841 et il gagne 
+[INFO ] 2018-12-02 12:41:17.564 [main] Log - Ordinateur reponse  proposé6653 et il perd il reste  10 essais
+[INFO ] 2018-12-02 12:41:17.568 [main] Log - Ordinateur reponse  proposé2653 et il perd il reste  9 essais
+[INFO ] 2018-12-02 12:41:17.569 [main] Log - Ordinateur reponse  proposé2553 et il perd il reste  8 essais
+[INFO ] 2018-12-02 12:41:17.570 [main] Log - Ordinateur propose  2652 et il gagne 
+[INFO ] 2018-12-02 12:41:33.822 [main] Log - Mode dev
+[INFO ] 2018-12-02 12:41:33.822 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 12:41:33.822 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 12:41:33.822 [main] Log -  c'est le Joueur qui choisi
+[INFO ] 2018-12-02 12:41:33.822 [main] Log - Combinaisaon à trouver :2365
+[INFO ] 2018-12-02 12:41:33.822 [main] Log - Mode dev
+[INFO ] 2018-12-02 12:41:33.823 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 12:41:33.823 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 12:41:33.823 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 12:41:33.823 [main] Log - Combinaisaon à trouver :2024
+[INFO ] 2018-12-02 12:41:33.825 [main] Log - Ordinateur reponse  proposé9531 et il perd il reste  10 essais
+[INFO ] 2018-12-02 12:59:31.352 [main] Log - Ordinateur reponse  proposé6611 et il perd il reste  10 essais
+[INFO ] 2018-12-02 12:59:31.356 [main] Log - Ordinateur reponse  proposé4611 et il perd il reste  9 essais
+[INFO ] 2018-12-02 12:59:31.357 [main] Log - Ordinateur reponse  proposé4511 et il perd il reste  8 essais
+[INFO ] 2018-12-02 12:59:31.359 [main] Log - Ordinateur reponse  proposé4661 et il perd il reste  7 essais
+[INFO ] 2018-12-02 12:59:31.360 [main] Log - Ordinateur reponse  proposé1661 et il perd il reste  6 essais
+[INFO ] 2018-12-02 12:59:31.361 [main] Log - Ordinateur reponse  proposé1664 et il perd il reste  5 essais
+[INFO ] 2018-12-02 12:59:31.361 [main] Log - Ordinateur reponse  proposé1644 et il perd il reste  4 essais
+[INFO ] 2018-12-02 12:59:31.362 [main] Log - Ordinateur propose  1654 et il gagne 
+[TRACE] 2018-12-02 13:01:25.098 [main] Log - Debut
+[INFO ] 2018-12-02 13:01:25.101 [main] Log - Mode dev
+[INFO ] 2018-12-02 13:01:25.101 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 13:01:25.101 [main] Log -  Mode de Jeux selectionné :challenger
+[INFO ] 2018-12-02 13:01:25.101 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 13:01:25.101 [main] Log - Combinaisaon à trouver :3443
+[INFO ] 2018-12-02 13:01:35.041 [main] Log - Joueur propose  3443 et il gagne 
+[TRACE] 2018-12-02 13:01:46.809 [main] Log - Debut
+[INFO ] 2018-12-02 13:01:46.809 [main] Log - Mode dev
+[INFO ] 2018-12-02 13:01:46.809 [main] Log -   Jeux selectionné :MasterMind
+[INFO ] 2018-12-02 13:01:46.809 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 13:01:46.809 [main] Log -  c'est le Joueur qui choisi
+[INFO ] 2018-12-02 13:01:46.809 [main] Log - Combinaisaon à trouver :3265
+[TRACE] 2018-12-02 13:01:46.809 [main] Log - Debut
+[INFO ] 2018-12-02 13:01:46.809 [main] Log - Mode dev
+[INFO ] 2018-12-02 13:01:46.810 [main] Log -   Jeux selectionné :MasterMind
+[INFO ] 2018-12-02 13:01:46.810 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 13:01:46.810 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 13:01:46.810 [main] Log - Combinaisaon à trouver :45454
+[INFO ] 2018-12-02 13:02:59.247 [main] Log - Ordinateur reponse  proposé3653 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:02:59.251 [main] Log - Ordinateur reponse  proposé2653 et il perd il reste  9 essais
+[INFO ] 2018-12-02 13:02:59.252 [main] Log - Ordinateur reponse  proposé3553 et il perd il reste  8 essais
+[INFO ] 2018-12-02 13:02:59.253 [main] Log - Ordinateur reponse  proposé3623 et il perd il reste  7 essais
+[INFO ] 2018-12-02 13:02:59.254 [main] Log - Ordinateur reponse  proposé3622 et il perd il reste  6 essais
+[INFO ] 2018-12-02 13:02:59.254 [main] Log - Ordinateur reponse  proposé3322 et il perd il reste  5 essais
+[INFO ] 2018-12-02 13:02:59.255 [main] Log - Ordinateur reponse  proposé3632 et il perd il reste  4 essais
+[INFO ] 2018-12-02 13:02:59.256 [main] Log - Ordinateur reponse  proposé3652 et il perd il reste  3 essais
+[INFO ] 2018-12-02 13:02:59.257 [main] Log - Ordinateur reponse  proposé3656 et il perd il reste  2 essais
+[INFO ] 2018-12-02 13:02:59.261 [main] Log - Ordinateur reponse  proposé3666 et il perd il reste  1 essais
+[INFO ] 2018-12-02 13:15:12.220 [main] Log - Ordinateur reponse  proposé6525 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:15:12.226 [main] Log - Ordinateur reponse  proposé2525 et il perd il reste  9 essais
+[INFO ] 2018-12-02 13:15:12.227 [main] Log - Ordinateur reponse  proposé2625 et il perd il reste  8 essais
+[INFO ] 2018-12-02 13:15:12.228 [main] Log - Ordinateur reponse  proposé2635 et il perd il reste  7 essais
+[INFO ] 2018-12-02 13:15:12.228 [main] Log - Ordinateur reponse  proposé2623 et il perd il reste  6 essais
+[INFO ] 2018-12-02 13:15:12.229 [main] Log - Ordinateur reponse  proposé5623 et il perd il reste  5 essais
+[INFO ] 2018-12-02 13:15:12.230 [main] Log - Ordinateur reponse  proposé3623 et il perd il reste  4 essais
+[INFO ] 2018-12-02 13:15:12.231 [main] Log - Ordinateur reponse  proposé3626 et il perd il reste  3 essais
+[INFO ] 2018-12-02 13:15:12.232 [main] Log - Ordinateur reponse  proposé3622 et il perd il reste  2 essais
+[INFO ] 2018-12-02 13:15:12.236 [main] Log - Ordinateur propose  3625 et il gagne 
+[INFO ] 2018-12-02 13:28:32.009 [main] Log - Ordinateur reponse  proposé3533 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:28:32.015 [main] Log - Ordinateur reponse  proposé2533 et il perd il reste  9 essais
+[INFO ] 2018-12-02 13:28:32.016 [main] Log - Ordinateur reponse  proposé3333 et il perd il reste  8 essais
+[INFO ] 2018-12-02 13:28:32.017 [main] Log - Ordinateur reponse  proposé3433 et il perd il reste  7 essais
+[INFO ] 2018-12-02 13:28:32.018 [main] Log - Ordinateur reponse  proposé3434 et il perd il reste  6 essais
+[INFO ] 2018-12-02 13:28:32.018 [main] Log - Ordinateur reponse  proposé3534 et il perd il reste  5 essais
+[INFO ] 2018-12-02 13:28:32.019 [main] Log - Ordinateur reponse  proposé3544 et il perd il reste  4 essais
+[INFO ] 2018-12-02 13:28:32.020 [main] Log - Ordinateur reponse  proposé3554 et il perd il reste  3 essais
+[INFO ] 2018-12-02 13:28:32.021 [main] Log - Ordinateur propose  3524 et il gagne 
+[INFO ] 2018-12-02 13:29:24.353 [main] Log - Ordinateur reponse  proposé5325 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:29:24.357 [main] Log - Ordinateur reponse  proposé3325 et il perd il reste  9 essais
+[INFO ] 2018-12-02 13:29:24.358 [main] Log - Ordinateur reponse  proposé3625 et il perd il reste  8 essais
+[INFO ] 2018-12-02 13:29:24.359 [main] Log - Ordinateur reponse  proposé3225 et il perd il reste  7 essais
+[INFO ] 2018-12-02 13:29:24.359 [main] Log - Ordinateur reponse  proposé3223 et il perd il reste  6 essais
+[INFO ] 2018-12-02 13:29:24.360 [main] Log - Ordinateur reponse  proposé3235 et il perd il reste  5 essais
+[INFO ] 2018-12-02 13:29:24.361 [main] Log - Ordinateur reponse  proposé3255 et il perd il reste  4 essais
+[INFO ] 2018-12-02 13:29:24.361 [main] Log - Ordinateur propose  3265 et il gagne 
+[TRACE] 2018-12-02 13:30:08.214 [main] Log - Debut
+[INFO ] 2018-12-02 13:30:08.218 [main] Log - Mode dev
+[INFO ] 2018-12-02 13:30:08.218 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 13:30:08.218 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 13:30:08.218 [main] Log -  c'est le Joueur qui choisi
+[INFO ] 2018-12-02 13:30:08.218 [main] Log - Combinaisaon à trouver :2365
+[TRACE] 2018-12-02 13:30:08.218 [main] Log - Debut
+[INFO ] 2018-12-02 13:30:08.218 [main] Log - Mode dev
+[INFO ] 2018-12-02 13:30:08.218 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 13:30:08.218 [main] Log -  Mode de Jeux selectionné :duel
+[INFO ] 2018-12-02 13:30:08.218 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 13:30:08.218 [main] Log - Combinaisaon à trouver :2454
+[INFO ] 2018-12-02 13:30:08.220 [main] Log - Ordinateur reponse  proposé1397 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:30:17.674 [main] Log - Joueur reponse  proposé0231 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:30:17.677 [main] Log - Ordinateur reponse  proposé1890 et il perd il reste  10 essais
+[INFO ] 2018-12-02 13:30:30.674 [main] Log - Joueur propose  2454 et il gagne 
