@@ -98,12 +98,48 @@ class MasterMind extends Game {
         }
         return new String[]{number, index};
     }
+    private String anttiDuplicate(String test,String lastAnswer,String rightPlacedColor,String selectedColor,String []banned){
+        StringBuilder newTest = new StringBuilder();
+        boolean done = false;
+        while (lastAnswer.contains(test) && !done) {
+            //todo:fontion anti doublon
+            newTest.append(test);
+            while (newTest.toString().equals(test) && !done) {
+                newTest.delete(0, newTest.length());
+                newTest.append(test);
+               String nb;
+                for (int h = 0; h < test.length(); h++) {
+                    nb = "";
+                    if (Character.toString(rightPlacedColor.charAt(h)).equals("_")) {
+                        nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
+                        while (banned[h].contains(nb)) {
+                            nb = "";
+                            nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
+                        }
+                        newTest.setCharAt(h, nb.charAt(0));
+
+                        if (!lastAnswer.contains(newTest.toString())) {
+                            h = test.length() + 1;
+                            done = true;
+                        }
+                    }
+                    if (!rightPlacedColor.contains("_")) {
+                        h = test.length() + 1;
+                        done = true;
+                    }
+                }
+                test = newTest.toString();
+            }
+        }
+            //
+return test;
+}
 
     String masterMindAnswer(String selectedColor, String wrongAnswer, String rightPlacedColor, int performedTest, int nbCase, String last, int indexChar) {
 
         String answer = "";
         String nb;
-        String test;
+        String test = "";
         Random random = new Random();
 
         if (performedTest == 0) {
@@ -134,43 +170,13 @@ class MasterMind extends Game {
                     }
                     test += nb;
                     if (test.length() == nbCase && last.contains(test)) {
-                        StringBuilder newTest = new StringBuilder();
-                        boolean done = false;
-                        while (last.contains(test) && !done) {
-                            //todo:fontion anti doublon
-                            newTest.append(test);
-                            while (newTest.toString().equals(test) && !done) {
-                                newTest.delete(0, newTest.length());
-                                newTest.append(test);
-                                for (int h = 0; h < nbCase; h++) {
-                                    nb = "";
-                                    if (Character.toString(rightPlacedColor.charAt(h)).equals("_")) {
-                                        nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
-                                        while (bannedAnswer[h].contains(nb)) {
-                                            nb = "";
-                                            nb += selectedColor.charAt(random.nextInt(selectedColor.length()));
-                                        }
-                                        newTest.setCharAt(h, nb.charAt(0));
-
-                                        if (!last.contains(newTest.toString())) {
-                                            h = nbCase + 1;
-                                            done = true;
-                                        }
-                                    }
-                                    if (!rightPlacedColor.contains("_")) {
-                                        h = nbCase + 1;
-                                        done = true;
-                                    }
-                                }
-                                test = newTest.toString();
-                            }
-                            //
+                        test=anttiDuplicate(test,last,rightPlacedColor,selectedColor,bannedAnswer);
                         }
                     }
                 }
-                answer = test;
+            answer = test;
             }
-        }
+
         return answer;
     }
 

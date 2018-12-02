@@ -1,11 +1,15 @@
 package com.openclassrooms.mpancarte;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ConsoleUtils {
     private static BufferedReader entree = new BufferedReader(new InputStreamReader(System.in));
+    
 
     //READ INT
     static int intInput() {
@@ -76,6 +80,7 @@ public class ConsoleUtils {
                 int nb = Integer.parseInt(selection);
 
                 if (!selection.matches(regex)) {
+
                     System.out.println("Invalid number " + nb);
                 }
                 return selection;
@@ -83,6 +88,7 @@ public class ConsoleUtils {
                 System.out.println("Erreur de lecture clavier");
             } catch (NumberFormatException exp) {
                 System.out.println("Erreur de nombre");
+
             }
         }
     }
