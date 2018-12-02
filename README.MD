@@ -15,7 +15,6 @@ L'attaquant doit deviner la combinaison secrète en un nombre limité d'essais.
 Pour lancer le programme depuis l'invite de commande il faut(il faut télécharger le dosier META-INF):
 Définir le chemin pour inclure le fichier JDK. Par exemple:
 ######C:..\Desktop\META-INF java> path c:\Program Files\Java\jdk1.7.0_25\bin;%path%
-On Compile les class(es):
-C:\mywork> javac *.java
+
 et executer le jar avec cette commande
 ######C:..\Desktop\META-INF java> -jar Projet3.jar

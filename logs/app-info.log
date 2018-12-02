@@ -158,3 +158,27 @@
 [INFO ] 2018-12-02 13:30:17.674 [main] Log - Joueur reponse  proposé0231 et il perd il reste  10 essais
 [INFO ] 2018-12-02 13:30:17.677 [main] Log - Ordinateur reponse  proposé1890 et il perd il reste  10 essais
 [INFO ] 2018-12-02 13:30:30.674 [main] Log - Joueur propose  2454 et il gagne 
+[INFO ] 2018-12-02 15:17:05.375 [main] Log - Ordinateur reponse  proposé5623 et il perd il reste  10 essais
+[INFO ] 2018-12-02 15:17:05.400 [main] Log - Ordinateur reponse  proposé3623 et il perd il reste  9 essais
+[INFO ] 2018-12-02 15:17:05.400 [main] Log - Ordinateur reponse  proposé3323 et il perd il reste  8 essais
+[INFO ] 2018-12-02 15:17:05.401 [main] Log - Ordinateur reponse  proposé3633 et il perd il reste  7 essais
+[INFO ] 2018-12-02 15:17:05.402 [main] Log - Ordinateur reponse  proposé3632 et il perd il reste  6 essais
+[INFO ] 2018-12-02 15:17:05.403 [main] Log - Ordinateur reponse  proposé3636 et il perd il reste  5 essais
+[INFO ] 2018-12-02 15:17:05.403 [main] Log - Ordinateur reponse  proposé3656 et il perd il reste  4 essais
+[INFO ] 2018-12-02 15:17:05.404 [main] Log - Ordinateur reponse  proposé3626 et il perd il reste  3 essais
+[INFO ] 2018-12-02 15:17:05.405 [main] Log - Ordinateur propose  3625 et il gagne 
+[TRACE] 2018-12-02 15:17:10.552 [main] Log - Debut
+[INFO ] 2018-12-02 15:17:10.552 [main] Log - Mode dev
+[INFO ] 2018-12-02 15:17:10.552 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 15:17:10.552 [main] Log -  Mode de Jeux selectionné :challenger
+[INFO ] 2018-12-02 15:17:10.552 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 15:17:10.553 [main] Log - Combinaisaon à trouver :8693
+[INFO ] 2018-12-02 15:17:13.367 [main] Log - Joueur reponse  proposé2658 et il perd il reste  10 essais
+[TRACE] 2018-12-02 15:18:25.051 [main] Log - Debut
+[INFO ] 2018-12-02 15:18:25.054 [main] Log - Mode dev
+[INFO ] 2018-12-02 15:18:25.054 [main] Log -   Jeux selectionné :SecretNumber
+[INFO ] 2018-12-02 15:18:25.054 [main] Log -  Mode de Jeux selectionné :challenger
+[INFO ] 2018-12-02 15:18:25.054 [main] Log -  c'est le Ordinateur qui choisi
+[INFO ] 2018-12-02 15:18:25.054 [main] Log - Combinaisaon à trouver :8536
+[INFO ] 2018-12-02 15:18:27.775 [main] Log - Joueur reponse  proposé3265 et il perd il reste  10 essais
+[INFO ] 2018-12-02 15:18:40.311 [main] Log - Joueur reponse  proposé2315 et il perd il reste  9 essais

@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 class ConfigReader {
-    private boolean developerMode = false;
+    private boolean developerMode;
     private int trials = 10;
     private int colors = 5;
     private int cases = 4;
@@ -16,7 +16,7 @@ class ConfigReader {
 
         InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream("config.properties");
         properties.load(input);
-        developerMode = Boolean.valueOf(properties.getProperty("developerMode","false"));
+        developerMode = Boolean.valueOf(properties.getProperty("developerMode", "false"));
         try {
             cases = Integer.valueOf(properties.getProperty("NbCase", "4"));
             colors = Integer.valueOf(properties.getProperty("NbCouleurSelec", "5"));
@@ -26,19 +26,19 @@ class ConfigReader {
         }
     }
 
-    public boolean isDeveloperMode() {
+    boolean isDeveloperMode() {
         return developerMode;
     }
 
-    public int getTrials() {
+    int getTrials() {
         return trials;
     }
 
-    public int getColors() {
+    int getColors() {
         return colors;
     }
 
-    public int getCases() {
+    int getCases() {
         return cases;
     }
 }
