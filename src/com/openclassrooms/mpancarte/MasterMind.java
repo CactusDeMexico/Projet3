@@ -237,6 +237,7 @@ class MasterMind extends Game {
 
     private int playerTurn(String combination, int trials, boolean gamerMode, String selection) throws Exception {
         ConfigReader data = new ConfigReader();
+        Log log = new Log();
         String possibleColor = printSelectedColors(selection);
         String printColors = printSelectedColors(combination);
         System.out.println(gamerMode ? "\033[36m La combinaison   de l'ordinateur est: " + printColors : "\033[36m   C'est votre tour");
@@ -245,6 +246,7 @@ class MasterMind extends Game {
         int indication[] = color(answer, combination);
         int goodColor = indication[0];
         int colorExist = indication[1];
+        log.result(answer, combination, data.getTrials() - trials, "Joueur");
         return verification(combination, answer, goodColor, colorExist, trials, "e joueur");
     }
 
@@ -252,6 +254,8 @@ class MasterMind extends Game {
         int goodColor;
         int colorExist;
         String answer;
+        ConfigReader data = new ConfigReader();
+        Log log = new Log();
         String printColors = printSelectedColors(combination);
         int length = combination.length();
         System.out.println(gamerMode ? "\033[33m La combinaison  du Joueur est: " + printColors : "\033[33m C'est le tour de l'ordinateur:");
@@ -271,12 +275,14 @@ class MasterMind extends Game {
             this.clue = Integer.toString(goodColor) + "," + Integer.toString(colorExist);
             trials = verification(combination, answer, goodColor, colorExist, trials, "ordinateur");
         }
+        log.result(answer, combination, data.getTrials() - trials, "Ordinateur");
 
         return trials;
     }
 
     void boardGame(String mode) throws Exception {
         ConfigReader data = new ConfigReader();
+        Log log = new Log();
         int trials = 0;
         String combination;
         String selectedColor;
@@ -284,6 +290,7 @@ class MasterMind extends Game {
             case "challenger":
                 selectedColor = selectionIA(data.getColors(), "MasterMind");
                 combination = combinationSelection(selectedColor, false);
+                log.setInfo(data.isDeveloperMode(), "MasterMind", combination, "Ordinateur", mode);
                 while (trials < data.getTrials()) {
                     trials = playerTurn(combination, trials, data.isDeveloperMode(), selectedColor);
                     trials++;
@@ -303,7 +310,8 @@ class MasterMind extends Game {
                 String combinationSelection = combinationSelection(selectedColorPlayer, true);
                 selectedColor = selectionIA(data.getColors(), "MasterMind");
                 combination = combinationSelection(selectedColor, false);
-
+                log.setInfo(data.isDeveloperMode(), "MasterMind", combinationSelection, "Joueur", mode);
+                log.setInfo(data.isDeveloperMode(), "MasterMind", combination, "Ordinateur", mode);
                 while (data.getTrials() > trials) {
                     while (!(pcTurn && playerTurn) || trials < data.getTrials()) {
                         if (computerTurn && trials < data.getTrials()) {

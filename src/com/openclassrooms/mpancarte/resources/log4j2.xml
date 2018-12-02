@@ -14,16 +14,14 @@
             </Policies>
         </RollingFile>
 
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
-        </Console>
+
     </Appenders>
     <Loggers>
         <Logger name="com.openclassrooms.mpancarte" level="trace" additivity="true">
-            <appender-ref ref="fileLogger" level="debug" />
+            <appender-ref ref="fileLogger" level="trace" />
         </Logger>
         <Root level="trace" additivity="false">
-            <appender-ref ref="console" />
+
         </Root>
     </Loggers>
 </Configuration>
