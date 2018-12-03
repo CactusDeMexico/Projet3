@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 
 public class ConsoleUtils {
     private static BufferedReader entree = new BufferedReader(new InputStreamReader(System.in));
-    
 
     //READ INT
     static int intInput() {
@@ -43,7 +42,6 @@ public class ConsoleUtils {
             }
         } while (!ok);
         return nb;
-
     }
 
     //READ sTRING
@@ -69,10 +67,11 @@ public class ConsoleUtils {
         }
         return chaine.charAt(0);
     }
+
     //READ STRING WHO COUNTER ONLY INTEGER
     static String inputStringNumber() {
 
-        String selection ;
+        String selection;
         while (true) {
             try {
                 String regex = "[0-9]+";
@@ -88,7 +87,6 @@ public class ConsoleUtils {
                 System.out.println("Erreur de lecture clavier");
             } catch (NumberFormatException exp) {
                 System.out.println("Erreur de nombre");
-
             }
         }
     }

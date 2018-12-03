@@ -35,8 +35,9 @@ abstract class Game {
         }
         return test;
     }
+
     //set and return combinaison pc
-    String selectionIA(int nbCase,String gameMode) {
+    String selectionIA(int nbCase, String gameMode) {
         String selection = "";
         Random random = new Random();
         String nb;

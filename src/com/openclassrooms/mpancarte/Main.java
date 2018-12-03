@@ -6,6 +6,5 @@ public class Main {
 
         Menu leMenu = new Menu();
         leMenu.menu();
-
     }
 }

@@ -1,22 +1,21 @@
 
-        package com.openclassrooms.mpancarte;
+package com.openclassrooms.mpancarte;
 
 class Menu {
     private String gameSelected = "";
 
-    private void launcher(String mode) throws Exception{
+    private void launcher(String mode) throws Exception {
         MasterMind gameM = new MasterMind();
         SecretNumber gameS = new SecretNumber();
         if (this.gameSelected.equalsIgnoreCase("MasterMind")) {
             gameM.boardGame(mode);
-
         } else {
             gameS.boardGame(mode);
         }
     }
 
-    private void gameMode()throws Exception {
-        int selection ;
+    private void gameMode() throws Exception {
+        int selection;
         do {
             System.out.println("__________Selection mode de jeux __________");
             System.out.println("1- Mode challenger \n  où vous devez trouver la combinaison secrète de l'ordinateur ___________");
@@ -62,6 +61,5 @@ class Menu {
                 this.gameMode();
             }
         }
-
     }
 }
