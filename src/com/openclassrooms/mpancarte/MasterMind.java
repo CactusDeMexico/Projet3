@@ -232,6 +232,9 @@ class MasterMind extends Game {
             System.out.println("Raté la Reponse du " + player + " est " + printColors + " il reste " + (data.getTrials() - trials - 1));
         }
         System.out.println("Il y a :" + goodColor + " bien placé et : " + colorExist + " couleur existantes");
+        if (trials == 0) {
+            System.out.println("la combinaison est :" + combination);
+        }
         return trials;
     }
 
