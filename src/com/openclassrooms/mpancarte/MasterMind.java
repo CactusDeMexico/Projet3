@@ -233,7 +233,7 @@ class MasterMind extends Game {
         }
         System.out.println("Il y a :" + goodColor + " bien placé et : " + colorExist + " couleur existantes");
         if (trials == 0) {
-            System.out.println("la combinaison est : " + combination);
+            System.out.println("la combinaison est :" + combination);
         }
         return trials;
     }
