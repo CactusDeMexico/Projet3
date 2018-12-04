@@ -64,6 +64,9 @@ class SecretNumber extends Game {
         } else {
             System.out.println("Raté la Reponse du " + player + "est " + answer + " il reste " + (data.getTrials() - trials - 1));
         }
+        if (trials == 0) {
+            System.out.println("la combinaison est :" + nbSecret);
+        }
         System.out.println("indication" + indication);
         return trials;
     }
