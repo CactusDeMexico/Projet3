@@ -177,29 +177,33 @@ class MasterMind extends Game {
         return answer;
     }
 
-    private String combinationSelection(String color, boolean player) {
+    private String combinationSelection(String color, boolean player) throws Exception {
         StringBuilder selection = new StringBuilder();
         StringBuilder test = new StringBuilder();
+        ConfigReader data = new ConfigReader();
+        String print = printSelectedColors(color);
         int nb;
-        for (int g = 0; g < color.length(); g++) {
+        for (int g = 0; g <= 10; g++) {
             if (!player) {
                 nb = random.nextInt(color.length());
                 test.append(nb);
+                if (test.length() == data.getCases()) {
+                    g = 11;
+                }
             } else {
-                String print = printSelectedColors(color);
                 System.out.println("Veuillez selectionner une couleur dans " + print + " :10 sortie");
                 nb = ConsoleUtils.intInput();
+                while (nb != 10 && nb > color.length() - 1 && nb > color.length() - 1) {
+                    System.out.println("Veuillez selectionner une couleur à la fois et dans  " + print + " :10 sortie");
+                    nb = ConsoleUtils.intInput();
+                }
                 if (nb == 10) {
-                    g = color.length() + 1;
+                    g = 11;
                 } else {
-                    while (String.valueOf(nb).length() != 1 || nb >= color.length() || nb == 10) {
-                        System.out.println("Veuillez selectionner une couleur  dans " + print);
-                        nb = ConsoleUtils.intInput();
-                    }
                     test.append(nb);
                 }
             }
-            if (nb < color.length()) {
+            if (nb < 10) {
                 selection.append(color.charAt(Character.getNumericValue(test.charAt(g))));
             }
         }
@@ -284,6 +288,7 @@ class MasterMind extends Game {
     }
 
     void boardGame(String mode) throws Exception {
+
         ConfigReader data = new ConfigReader();
         Log log = new Log();
         int trials = 0;

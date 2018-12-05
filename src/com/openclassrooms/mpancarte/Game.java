@@ -25,7 +25,7 @@ abstract class Game {
         return test;
     }
 
-    String antiDuplicateString(String selection, String test) {
+    private String antiDuplicateString(String selection, String test) {
         Random random = new Random();
         if (selection.contains(test)) {
             while (selection.contains(test)) {
@@ -51,7 +51,7 @@ abstract class Game {
             selection += nb;
         }
 
-        return selection.toString();
+        return selection;
     }
 
     //set and return combinaison player
@@ -86,7 +86,7 @@ abstract class Game {
     }
 
     // return last existColor
-    int existColor() {
+    private int existColor() {
         StringBuilder previousData = new StringBuilder();
         if (this.existColor.size() == 0) {
 
@@ -160,8 +160,8 @@ abstract class Game {
     String answerIA(String gameMode, int nbCase, int performedTest, String indication, String lastAnswer) throws Exception {
         String answer;
         StringBuilder test = new StringBuilder();
-        SecretNumber jeux = new SecretNumber();
-        MasterMind jeux2 = new MasterMind();
+        SecretNumber game = new SecretNumber();
+        MasterMind game2 = new MasterMind();
         String answerToCheck;
         for (int i = 0; i < nbCase; i++) {   //1er essai de l'ordinateur
 
@@ -176,7 +176,7 @@ abstract class Game {
                     foundedC.append(this.rightPlaced.get(u));
                     wrongAnswer.append(this.wrongPlaced[u]).append(";");
                 }
-                answerToCheck = jeux2.masterMindAnswer(indication, wrongAnswer.toString(), foundedC.toString(), performedTest, nbCase, lastAnswer(), this.indexChar);
+                answerToCheck = game2.masterMindAnswer(indication, wrongAnswer.toString(), foundedC.toString(), performedTest, nbCase, lastAnswer(), this.indexChar);
                 if (answerToCheck.length() != nbCase && performedTest == 0) {
                     test.append(answerToCheck);
                 } else {
@@ -184,7 +184,7 @@ abstract class Game {
                     i = nbCase;
                 }
             } else {
-                test.append(jeux.secretNumberAnswer(indication, i, lastAnswer, performedTest, lastAnswer()));
+                test.append(game.secretNumberAnswer(indication, i, lastAnswer, performedTest, lastAnswer()));
             }
         }
         indexChar++;
@@ -201,10 +201,12 @@ abstract class Game {
         if (x.length() == nbCase) {
             selection = new StringBuilder(x);
         } else {
-            while (selection.length() != nbCase) {
+            while (x.length() != nbCase) {
+                System.out.println("Entrer une combinaison de " + nbCase + " chiffres Uniquement");
                 x = ConsoleUtils.inputStringNumber();
-                selection.append(x);
+
             }
+            selection.append(x);
         }
 
         return selection.toString();
